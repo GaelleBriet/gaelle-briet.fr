@@ -17,7 +17,7 @@ export const site = {
   copyright: '© 2026 Gaëlle Briet · Développeuse web · approche produit',
   links: {
     github: { label: 'GitHub · GaelleBriet', url: 'https://github.com/GaelleBriet' },
-    linkedin: { label: 'LinkedIn · gaellebriet', url: 'https://www.linkedin.com/in/gaellebriet/' },
+    linkedin: { label: 'LinkedIn · gaellebriet', url: 'https://www.linkedin.com/in/gaelle-briet-666184227/' },
   },
   zone: {
     title: 'Provence-Alpes-Côte d\'Azur',
@@ -37,10 +37,10 @@ export const meta = {
 export const nav: NavLink[] = [
   { label: 'Projets', href: '#projets' },
   { label: 'Méthode', href: '#methode' },
-  { label: 'Missions', href: '#missions' },
 ]
 
-export const navCta: NavLink = { label: 'Contact', href: '#contact' }
+// Le bouton mène à la section « Travaillons ensemble », pas au pied de page.
+export const navCta: NavLink = { label: 'Contact', href: '#missions' }
 
 export const hero = {
   eyebrow: 'Applications web et outils métier',

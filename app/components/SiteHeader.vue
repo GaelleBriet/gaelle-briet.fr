@@ -10,7 +10,7 @@ import { nav, navCta, site } from '~/content/site'
           class="brand__mark"
           src="/images/marque-gb.svg"
           :alt="site.brandAlt"
-          width="105"
+          width="118"
           height="42"
         >
         <span class="brand__text">
