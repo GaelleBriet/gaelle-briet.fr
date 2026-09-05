@@ -1,0 +1,14 @@
+node_modules
+.nuxt
+.output
+.data
+dist
+.env
+*.log
+.DS_Store
+
+# Export de la maquette Claude Design (1,1 Mo, référence de travail seulement)
+_reference/
+
+# Fichier de dossier KDE
+.directory

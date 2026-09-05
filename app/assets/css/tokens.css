@@ -1,0 +1,96 @@
+/* Variables extraites de la maquette Claude Design v4.1
+   Règle de couleur : corail = action, teal = état, moutarde = attention.
+   Le trio ensemble uniquement : liseré sous la nav, barres des formules (ordre teal, moutarde, corail). */
+
+:root {
+  /* Couleurs */
+  --cream:        #F3EAD3;   /* fond de page */
+  --cream-card:   #F8F1DE;   /* fond des fiches, formules, feuille de route */
+  --ink:          #2E2A26;   /* texte, bordures, ombres */
+  --teal:         #0F6F82;   /* état, données, monospace, en-tête "En service" */
+  --teal-light:   #D9EAEE;   /* fond de l'annonce "Disponible" */
+  --mustard:      #E2B04A;   /* attention : "En cadrage", formule II */
+  --coral:        #DC6247;   /* action : boutons, tiret des surtitres, numéros, "sur devis" */
+
+  /* Polices auto-hébergées via @fontsource (voir fonts.css). Aucun appel externe. */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Karla', 'Helvetica Neue', Helvetica, sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+
+  /* Tailles */
+  --fs-hero:      clamp(40px, 5.6vw, 64px);
+  --fs-h2:        36px;
+  --fs-h3:        24px;      /* titres de fiches et de formules */
+  --fs-h4:        20px;      /* titres de la feuille de route */
+  --fs-body:      15px;
+  --fs-body-lg:   17px;      /* pitch du hero */
+  --fs-mono:      12px;      /* labels, statuts, tags */
+  --fs-mono-sm:   10.5px;    /* légendes, mentions, footer */
+
+  /* Graisses et interlignes */
+  --fw-display:   500;       /* Fraunces */
+  --fw-body:      400;
+  --fw-mono:      600;
+  --lh-tight:     1.15;      /* titres */
+  --lh-body:      1.6;
+
+  /* Interlettrage du monospace en capitales */
+  --track-mono:   .22em;
+  --track-mono-lg:.3em;      /* surtitres de section */
+  --track-display:-.01em;
+
+  /* Traits et ombres */
+  --border:       1.5px solid var(--ink);
+  --border-dash:  1.5px dashed var(--ink);   /* "Place libre" */
+  --border-dot:   1.5px dotted var(--ink);   /* petites annonces */
+  --rule:         1px solid var(--ink);      /* filets pleine largeur entre sections */
+  --shadow-hard:  4px 4px 0 var(--ink);      /* boutons */
+  --shadow-frame: 5px 5px 0 var(--ink);      /* cadre de l'affiche */
+  --radius:       0;                          /* angles droits ; 6 à 8 px uniquement sur l'affiche */
+
+  /* Espacements */
+  --container:    1240px;
+  --measure:      520px;     /* largeur max du pitch */
+  --pad-card:     26px 24px;
+  --pad-btn:      16px 32px;
+  --pad-btn-sm:   10px 18px;
+  --gap-sm:       12px;
+  --gap-md:       18px;
+  --gap-lg:       30px;
+  --section-y:    88px;      /* espace vertical entre sections, à ajuster */
+
+  /* Liseré sous la nav : trois segments égaux, 6 px de haut */
+  --stripe: linear-gradient(90deg,
+    var(--teal) 0 33.33%,
+    var(--mustard) 33.33% 66.66%,
+    var(--coral) 66.66% 100%);
+
+  /* --- Ajouts relevés sur la maquette v6 (valeurs absentes du fichier fourni) --- */
+  --coral-dark:   #C4533A;   /* survol des boutons corail */
+  --paper:        #EAE0C6;   /* papier des coupures */
+  --paper-edge:   #D8CCAA;   /* liseré sous le bord découpé des coupures */
+
+  --fs-nav:       11px;      /* liens de nav, surtitres de section */
+  --fs-brand:     26px;      /* « Gaëlle Briet » dans la nav */
+  --fs-brand-sub: 9.5px;     /* sous-titre de la marque */
+  --fs-card-body: 15.5px;    /* texte des fiches projet */
+  --fs-btn:       15px;      /* boutons : plancher d'accessibilité du brief */
+  --fs-btn-sm:    15px;      /* idem, seul le rembourrage change */
+  --fs-step-num:  15px;      /* numéros de la feuille de route */
+  --fs-footer:    14.5px;
+
+  --lh-hero:      1.04;
+  --lh-h2:        1.1;
+  --lh-lead:      1.65;
+  --lh-step:      1.55;
+
+  --track-mono-sm:.2em;      /* boutons, stack des fiches */
+  --track-nav:    .24em;
+
+  --pad-btn-lg:   15px 28px;  /* v6 resserre le --pad-btn de la v4.1 */
+  --pad-page:     28px;      /* gouttière horizontale */
+  --gap-col:      60px;      /* entre les deux colonnes des sections */
+  --shadow-card:  5px 5px 0 var(--ink);
+  --shadow-photo: 2px 2px 0 var(--ink);
+  --transition:   120ms ease;
+}

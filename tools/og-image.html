@@ -1,0 +1,44 @@
+<!doctype html><meta charset="utf-8">
+<!--
+  Gabarit de l'image Open Graph (1200 × 630).
+  Régénération : voir le README, section « Image Open Graph ».
+  Servir la racine du projet, puis capturer /tools/og-image.html en 1200 × 630.
+-->
+<style>
+@font-face{font-family:Fraunces;src:url(/node_modules/@fontsource/fraunces/files/fraunces-latin-500-normal.woff2) format('woff2');font-weight:500}
+@font-face{font-family:'IBM Plex Mono';src:url(/node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-600-normal.woff2) format('woff2');font-weight:600}
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1200px;height:630px;background:#F3EAD3;color:#2E2A26;overflow:hidden;position:relative;
+     font-family:Karla,-apple-system,sans-serif}
+.stripe{position:absolute;left:0;right:0;bottom:0;height:12px;display:flex}
+.stripe i{flex:1}
+.wrap{display:flex;height:100%;align-items:center;gap:56px;padding:56px 64px 68px}
+.left{flex:1 1 620px;min-width:0}
+.brand{display:flex;align-items:center;gap:16px;margin-bottom:44px}
+.brand img{height:46px;display:block}
+.brand-name{font-family:Fraunces;font-weight:500;font-size:30px;letter-spacing:-.01em;line-height:1}
+.brand-sub{font-family:'IBM Plex Mono';font-weight:600;font-size:11px;letter-spacing:.3em;
+           text-transform:uppercase;color:#0F6F82;margin-top:7px;line-height:1}
+h1{font-family:Fraunces;font-weight:500;font-size:60px;line-height:1.04;letter-spacing:-.015em}
+.eyebrow{display:flex;align-items:center;gap:14px;font-family:'IBM Plex Mono';font-weight:600;
+         font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:#0F6F82;margin-top:34px}
+.eyebrow span{width:26px;height:3px;background:#DC6247;flex:none}
+.frame{flex:none;width:400px;background:#F3EAD3;border:1.5px solid #2E2A26;padding:12px;
+       box-shadow:5px 5px 0 #2E2A26;transform:rotate(1.5deg)}
+.frame img{display:block;width:100%;height:auto}
+</style>
+<div class="wrap">
+  <div class="left">
+    <div class="brand">
+      <img src="/public/images/marque-gb.svg" alt="">
+      <div>
+        <div class="brand-name">Gaëlle Briet</div>
+        <div class="brand-sub">Développeuse web · approche produit</div>
+      </div>
+    </div>
+    <h1>Des outils qu'on<br>utilise vraiment</h1>
+    <p class="eyebrow"><span></span>Applications web et outils métier</p>
+  </div>
+  <div class="frame"><img src="/public/images/affiche-1200.webp" alt=""></div>
+</div>
+<div class="stripe"><i style="background:#0F6F82"></i><i style="background:#E2B04A"></i><i style="background:#DC6247"></i></div>

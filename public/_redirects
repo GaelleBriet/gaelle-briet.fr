@@ -1,0 +1,3 @@
+# Le domaine canonique est l'apex. Tout ce qui arrive sur www y est renvoyé,
+# en conservant le chemin. 301 : permanent, les moteurs transfèrent le référencement.
+https://www.gaelle-briet.fr/* https://gaelle-briet.fr/:splat 301
