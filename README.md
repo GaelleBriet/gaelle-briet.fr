@@ -19,7 +19,9 @@ npm run preview    # sert le résultat en local
 ```
 
 `npm run generate` est la commande de déploiement. Elle ne dépend d'aucun
-service : le dossier produit se sert tel quel.
+service : le dossier produit se sert tel quel. En local, `dist` est un lien
+symbolique vers `.output/public` ; sur Cloudflare, `dist` est le vrai dossier
+de sortie (voir « Déploiement »).
 
 ## Node
 
@@ -112,7 +114,9 @@ puisqu'aucun JS n'est servi. Le contournement, dans `nuxt.config.ts` :
 2. `app/pages/introuvable.vue` l'affiche sous une route normale, que le
    build prérend en `200` (Nitro refuse de prérendre une réponse `404`).
 3. Le hook `close` renomme `introuvable/index.html` en `404.html` et efface
-   le dossier : la page n'est atteignable que par ce chemin.
+   le dossier : la page n'est atteignable que par ce chemin. Il lit le
+   dossier de sortie réel auprès de Nitro (`nitro:init`), donc il fonctionne
+   aussi bien en local (`.output/public`) que sur Cloudflare (`dist`).
 
 Pour modifier le texte du 404, éditer `app/error.vue`.
 
@@ -144,15 +148,30 @@ prévisualisation, pratique pour valider une modification avant de fusionner.
    |---|---|
    | Framework preset | Nuxt |
    | Build command | `npm run generate` |
-   | Build output directory | `.output/public` |
+   | Build output directory | **`dist`** |
    | Variable d'environnement | `NODE_VERSION` = `22` |
 
 4. Lancer le premier déploiement et vérifier le résultat sur l'URL
    `*.pages.dev` avant de brancher le domaine.
 
+> **Pourquoi `dist` et pas `.output/public`** : sur Cloudflare, Nitro
+> détecte l'environnement et bascule sur le preset `cloudflare-pages-static`,
+> qui écrit dans `dist` — et y ajoute `_headers` (cache d'un an sur
+> `/_nuxt/*`) et la ligne `/* /404.html 404` dans `_redirects`. En local
+> le preset reste `static` (sortie `.output/public`) mais `dist` existe
+> aussi, en lien symbolique. `dist` est donc juste dans les deux cas.
+
 > La variable `NODE_VERSION` fait doublon avec `.nvmrc`, mais elle rend la
 > version explicite dans l'interface. **Ne pas mettre 20** : Nuxt 4.5 ne
 > démarre pas en dessous de Node 22.19.
+
+#### Si Cloudflare propose le formulaire Workers
+
+Cloudflare met parfois en avant le formulaire **Workers** (reconnaissable à
+la commande `npx wrangler deploy`). Ce site est prévu pour **Pages** : dans
+« Créer une application », choisir l'onglet **Pages**. Ne pas ajouter de
+`wrangler.jsonc` à la racine — Pages refuse la clé `assets` et le build
+échoue.
 
 ### 2. Brancher le domaine
 
