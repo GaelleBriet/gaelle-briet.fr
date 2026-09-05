@@ -113,10 +113,16 @@ puisqu'aucun JS n'est servi. Le contournement, dans `nuxt.config.ts` :
 1. `app/error.vue` dessine la page d'erreur (seul dessin, réutilisé partout).
 2. `app/pages/introuvable.vue` l'affiche sous une route normale, que le
    build prérend en `200` (Nitro refuse de prérendre une réponse `404`).
-3. Le hook `close` renomme `introuvable/index.html` en `404.html` et efface
-   le dossier : la page n'est atteignable que par ce chemin. Il lit le
-   dossier de sortie réel auprès de Nitro (`nitro:init`), donc il fonctionne
-   aussi bien en local (`.output/public`) que sur Cloudflare (`dist`).
+3. Un hook Nitro `prerender:generate` fait deux choses pendant le prérendu :
+   il saute la coquille `/404.html` de Nuxt (`route.skip`) et écrit
+   `/introuvable` sous le nom `404.html` (`route.fileName`). Rien n'est
+   renommé après coup, aucun dossier `introuvable/` n'existe en sortie, et
+   ça ne dépend ni du dossier de sortie ni de l'ordre des hooks.
+
+Le log de build affiche `[404] page /introuvable écrite sous 404.html` :
+si cette ligne manque dans un log Cloudflare, le hook n'a pas tourné.
+Un hook `close` reste en filet de sécurité (renommage a posteriori) ; il
+n'a normalement rien à faire.
 
 Pour modifier le texte du 404, éditer `app/error.vue`.
 

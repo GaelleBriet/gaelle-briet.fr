@@ -23,21 +23,32 @@ export default defineNuxtConfig({
   },
 
   hooks: {
-    // Nuxt écrit un 404.html vide, prévu pour être rempli côté client.
-    // Sans JS en production il resterait blanc : on le remplace par la
-    // page /introuvable rendue au build, et on efface la route d'origine
-    // pour qu'elle ne soit accessible que sous /404.html.
-    // Le dossier de sortie dépend du preset Nitro (.output/public en local,
-    // dist sur Cloudflare Pages) : on le lit plutôt que de le deviner.
+    // Nuxt prérend 404.html comme une coquille vide, prévue pour être
+    // remplie côté client. Sans JS en production elle resterait blanche.
+    // On demande donc à Nitro d'écrire la page /introuvable directement
+    // sous le nom 404.html, et de ne pas écrire la coquille. Tout se passe
+    // dans le prérendu lui-même : aucun renommage après coup, rien qui
+    // dépende de l'ordre des hooks ou du dossier de sortie.
     'nitro:init'(nitro) {
       publicDir = nitro.options.output.publicDir
+      nitro.hooks.hook('prerender:generate', (route) => {
+        if (route.route === '/404.html') {
+          route.skip = true
+        }
+        if (route.route === '/introuvable') {
+          route.fileName = '/404.html'
+          console.log('[404] page /introuvable écrite sous 404.html')
+        }
+      })
     },
+    // Filet de sécurité si un runner ignorait l'override ci-dessus.
     async close(nuxt) {
       if (nuxt.options.dev || !publicDir) return
       const source = join(publicDir, 'introuvable/index.html')
       if (!existsSync(source)) return
       await rename(source, join(publicDir, '404.html'))
       await rm(join(publicDir, 'introuvable'), { recursive: true, force: true })
+      console.log('[404] filet de sécurité : introuvable/index.html renommé en 404.html')
     },
   },
 
