@@ -181,26 +181,52 @@ la commande `npx wrangler deploy`). Ce site est prévu pour **Pages** : dans
 
 ### 2. Brancher le domaine
 
-1. Dans le projet Pages → **Custom domains**, ajouter `gaelle-briet.fr`
-   **et** `www.gaelle-briet.fr`. Cloudflare affiche la cible CNAME à créer.
-2. Chez Hostinger, zone DNS du domaine :
-   - `www` : CNAME vers la cible fournie par Cloudflare.
-   - apex `@` : CNAME vers la même cible si Hostinger l'accepte sur l'apex,
-     sinon les enregistrements A/AAAA indiqués par Cloudflare.
-   - **Ne toucher ni aux MX ni aux TXT existants** : c'est l'e-mail.
-3. Attendre que le certificat HTTPS soit actif avant de communiquer l'URL.
+Le domaine est enregistré chez **Infomaniak**, mais sa **zone DNS est
+hébergée chez Cloudflare** : Pages ne sait servir l'apex (`gaelle-briet.fr`
+sans `www`) que si la zone est chez lui. Le domaine reste chez Infomaniak,
+seuls les serveurs de noms changent.
 
-### 3. Redirection www → apex
+L'e-mail (`hello@`) passe par Proton, avec Infomaniak en secours : la zone
+contient donc des MX, SPF, DKIM, DMARC, SRV et CNAME d'autoconfiguration
+qu'il faut **recopier à l'identique** — rien de tout ça ne concerne le site,
+mais tout ça concerne le courrier.
 
-`public/_redirects` s'en charge, Cloudflare Pages le lit à la racine du
-dossier publié :
+1. Cloudflare → **Ajouter un domaine** (ou « Commencer le transfert DNS »
+   depuis Pages) → `gaelle-briet.fr`, offre gratuite.
+2. **Ne pas se fier au scan automatique** : il ne peut pas deviner les
+   sélecteurs DKIM ni les SRV. Importer plutôt le fichier de zone
+   (DNS → Records → *Import and Export*), en laissant **tous** les
+   enregistrements en « DNS only » (nuage gris) — ce sont des
+   enregistrements de courrier, le proxy les casserait.
+3. Chez Infomaniak → domaine → **Serveurs de noms** → serveurs
+   personnalisés → les deux `*.ns.cloudflare.com` indiqués par Cloudflare.
+4. Attendre que Cloudflare déclare la zone **active**, puis s'envoyer un
+   mail à `hello@` pour vérifier que le courrier arrive toujours.
+5. Projet Pages → **Custom domains** → ajouter `www.gaelle-briet.fr`
+   (l'enregistrement se crée tout seul). L'apex `gaelle-briet.fr` peut
+   s'ajouter plus tard, voir « Adresse canonique ».
+6. Attendre que le certificat HTTPS soit actif avant de communiquer l'URL.
+
+Vérifier après coup, depuis un terminal :
+
+```bash
+dig +short MX gaelle-briet.fr            # 3 lignes : Proton 10 et 20, Infomaniak 25
+dig +short TXT _dmarc.gaelle-briet.fr    # UNE seule ligne
+dig +short CNAME protonmail2._domainkey.gaelle-briet.fr   # …domains.proton.ch.
+```
+
+### 3. Adresse canonique
+
+Le site est servi sur **`https://www.gaelle-briet.fr`** : c'est l'URL que
+déclarent la balise `<link rel="canonical">`, les balises Open Graph, le
+`sitemap.xml` et `robots.txt` (tous dérivés de `site.url` dans
+`app/content/site.ts`). L'apex (`gaelle-briet.fr` sans `www`) n'est pas
+branché ; le jour où il l'est, il faudra le rediriger vers `www` via un
+fichier `public/_redirects` :
 
 ```
-https://www.gaelle-briet.fr/* https://gaelle-briet.fr/:splat 301
+https://gaelle-briet.fr/* https://www.gaelle-briet.fr/:splat 301
 ```
-
-Le domaine canonique est l'apex ; c'est aussi ce que déclare la balise
-`<link rel="canonical">` de la page.
 
 ## Ce que le site n'a pas, volontairement
 

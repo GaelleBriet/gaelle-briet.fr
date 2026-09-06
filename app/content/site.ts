@@ -10,7 +10,7 @@ export const site = {
   name: 'Gaëlle Briet',
   subtitle: 'Développeuse web · approche produit',
   email: 'hello@gaelle-briet.fr',
-  url: 'https://gaelle-briet.fr',
+  url: 'https://www.gaelle-briet.fr',
   brandAlt: 'Marque GB',
   sealAlt: 'Sceau Gaëlle Briet',
   stack: 'Angular · Vue.js · TypeScript',
