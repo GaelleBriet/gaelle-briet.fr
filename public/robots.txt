@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gaelle-briet.fr/sitemap.xml
+Sitemap: https://www.gaelle-briet.fr/sitemap.xml
