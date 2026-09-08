@@ -19,7 +19,10 @@ const { poster } = hero
         decoding="async"
       >
     </div>
-    <figcaption class="poster__caption">{{ poster.caption }}</figcaption>
+    <figcaption class="poster__caption">
+      <span class="poster__caption-text">{{ poster.caption }}</span>
+      <span class="poster__credit">{{ poster.credit }}</span>
+    </figcaption>
   </figure>
 </template>
 
@@ -50,13 +53,28 @@ const { poster } = hero
 
 .poster__caption {
   max-width: 460px;
+  text-align: center;
+}
+
+.poster__caption-text {
+  display: block;
   font-family: var(--font-mono);
   font-size: var(--fs-mono-sm);
   font-weight: var(--fw-mono);
   letter-spacing: var(--track-mono);
   text-transform: uppercase;
-  text-align: center;
   line-height: 1.7;
+}
+
+/* Mention de provenance : discrète, pas de mono ni de capitales pour ne
+   pas concurrencer la légende principale. */
+.poster__credit {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--ink);
+  opacity: .7;
 }
 
 @media (max-width: 760px) {

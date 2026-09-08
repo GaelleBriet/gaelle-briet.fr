@@ -145,6 +145,8 @@ useSeoMeta({
             <p v-for="paragraph in missions.paragraphs" :key="paragraph">{{ paragraph }}</p>
           </div>
 
+          <p class="missions__availability">{{ missions.availability }}</p>
+
           <a class="btn btn--primary missions__action" :href="missions.action.href">
             {{ missions.action.label }}
           </a>
@@ -292,8 +294,25 @@ useSeoMeta({
   text-wrap: pretty;
 }
 
+/* Mention temporaire (pas encore de SIRET) : couleur d'état (teal),
+   pas d'action, donc jamais corail. Retirer avec missions.availability
+   une fois la disponibilité effective. */
+.missions__availability {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 24px;
+  padding: 8px 14px;
+  background: var(--teal-light);
+  color: var(--teal);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  font-weight: var(--fw-mono);
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+}
+
 .missions__action {
-  margin-top: 32px;
+  margin-top: 20px;
 }
 
 .missions__clippings {

@@ -62,6 +62,7 @@ export const hero = {
     height: 1222,
     alt: 'Affiche de course automobile peinte, années 50 : trois monoplaces en pleine accélération.',
     caption: 'Fig. 01 · Une mission, plusieurs tours de piste.',
+    credit: 'Illustration générée par IA.',
   },
 } as const
 
@@ -77,6 +78,9 @@ export const method = {
 export const missions = {
   eyebrow: 'Un projet en tête ?',
   title: 'Travaillons ensemble',
+  // Le temps que l'auto-entreprise soit immatriculée (pas encore de SIRET) :
+  // mention temporaire, à retirer une fois la disponibilité effective.
+  availability: 'Disponible pour de nouvelles missions en octobre 2026.',
   portrait: {
     src: '/images/portrait-280.webp',
     srcset: '/images/portrait-280.webp 280w, /images/portrait-600.webp 600w',
