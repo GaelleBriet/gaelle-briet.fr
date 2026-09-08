@@ -3,6 +3,26 @@ import { projects, projectsSection } from '~/content/projects'
 import { clippings } from '~/content/clippings'
 import { hero, meta, method, missions, site } from '~/content/site'
 
+// Schema.org Person : aide Google et les moteurs IA à identifier l'entité
+// derrière le site (aucune donnée client, uniquement des infos publiques
+// déjà présentes sur la page).
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: site.subtitle,
+  url: site.url,
+  email: `mailto:${site.email}`,
+  image: site.url + '/images/portrait-600.webp',
+  knowsAbout: site.stack.split(' · '),
+  address: {
+    '@type': 'PostalAddress',
+    addressRegion: site.zone.title,
+    addressCountry: 'FR',
+  },
+  sameAs: [site.links.github.url, site.links.linkedin.url],
+}
+
 useHead({
   link: [
     { rel: 'canonical', href: site.url },
@@ -19,6 +39,12 @@ useHead({
     },
   ],
   meta: [{ name: 'theme-color', content: '#F3EAD3' }],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(personSchema),
+    },
+  ],
 })
 
 useSeoMeta({

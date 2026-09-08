@@ -1,0 +1,24 @@
+# Gaëlle Briet
+
+> Développeuse web front-end freelance (Angular, Vue.js, TypeScript), basée en
+> Provence-Alpes-Côte d'Azur, missions à distance. Applications web et outils
+> métier, de l'idée aux premières versions utilisables.
+
+## Site
+
+- [Accueil](https://www.gaelle-briet.fr/) : présentation, projets, méthode de
+  travail, contact.
+
+## Projets
+
+- [Symbaroum Bestiary Manager](https://github.com/GaelleBriet/symbaroum-bestiary) :
+  compagnon de jeu pour meneurs du jeu de rôle Symbaroum (Vue.js, TypeScript,
+  Supabase).
+- [MémoPatte](https://github.com/GaelleBriet/memo-patte-vue) : carnet de santé
+  pour animaux — vaccins, vermifuges, poids, rappels (Vue.js, en construction).
+
+## Contact
+
+- E-mail : hello@gaelle-briet.fr
+- [LinkedIn](https://www.linkedin.com/in/gaelle-briet-666184227/)
+- [GitHub](https://github.com/GaelleBriet)
