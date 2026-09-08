@@ -40,7 +40,7 @@ public/
   images/ (fournis : affiche, captures, portrait, logos)
 ```
 
-Tous les textes viennent des fichiers `content/*.ts`, jamais des composants. Ils sont dans le fichier `textes.md` fourni : les reprendre mot pour mot.
+Tous les textes viennent des fichiers `content/*.ts`, jamais des composants. `content/*.ts` est la source directe : les textes s'y éditent sur place, il n'y a plus de fichier `textes.md` intermédiaire à recopier mot pour mot (voir `docs/adr/0001-abandon-textes-md.md`).
 
 ## Design, ce qui ne se négocie pas
 - Palette et polices : `tokens.css`. Règle de couleur : corail = action, bleu pétrole = état et données, moutarde = attention. Le trio ensemble uniquement dans le liseré sous la nav.
