@@ -140,6 +140,7 @@ em, i, cite, address, dfn { font-style: normal; }
 .btn {
   display: inline-flex;
   align-items: center;
+  gap: var(--gap-sm);
   align-self: flex-start;
   border: var(--border);
   padding: var(--pad-btn-lg);
@@ -195,6 +196,10 @@ em, i, cite, address, dfn { font-style: normal; }
 .btn--ink:hover {
   color: var(--cream);
   transform: translateY(2px);
+}
+
+.btn__icon {
+  flex: none;
 }
 
 /* Fiche « Place libre » : contour encre. */

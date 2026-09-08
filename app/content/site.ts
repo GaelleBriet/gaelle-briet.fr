@@ -63,6 +63,15 @@ export const hero = {
     alt: 'Affiche de course automobile peinte, années 50 : trois monoplaces en pleine accélération.',
     caption: 'Fig. 01 · Une mission, plusieurs tours de piste.',
     credit: 'Illustration générée par IA.',
+    // Purement décorative, jouée au survol seulement (voir HeroPoster.vue) :
+    // l'alt et la légende ci-dessus restent la version accessible.
+    // Deux formats : le WebM (VP9) passe partout où le H.264 n'est pas
+    // installé (ex. Chromium sous Linux sans les codecs propriétaires),
+    // le MP4 (H.264) reste le filet de sécurité pour tous les autres.
+    video: {
+      webm: '/videos/affiche-course.webm',
+      mp4: '/videos/affiche-course.mp4',
+    },
   },
 } as const
 
