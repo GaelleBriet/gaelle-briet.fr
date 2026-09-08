@@ -4,14 +4,8 @@ import { hero } from '~/content/site'
 
 const { poster } = hero
 
-// Vidéo purement décorative (les roues qui tournent, l'effet de vitesse) :
-// elle ne se charge qu'au premier survol, jamais au chargement de la page,
-// et pas du tout si la personne a demandé de réduire les animations ou si
-// l'appareil n'a pas de vraie souris (pas de survol sur tactile).
+// Vidéo décorative, chargée seulement au premier survol.
 const videoEl = ref<HTMLVideoElement | null>(null)
-// Les deux <source> ne sont posées dans le DOM qu'au premier survol : un
-// <video> sans source ne se recharge pas tout seul quand on lui en ajoute
-// une après coup, d'où le video.load() explicite une fois qu'elles y sont.
 const sourcesLoaded = ref(false)
 const isVideoReady = ref(false)
 
@@ -71,8 +65,7 @@ function onFrameLeave() {
           fetchpriority="high"
           decoding="async"
         >
-        <!-- Décorative : l'alt et la légende du <figcaption> restent la
-             version accessible, la vidéo n'ajoute aucune information. -->
+        <!-- Décorative, voir figcaption pour l'alt. -->
         <video
           ref="videoEl"
           class="poster__video"
@@ -129,9 +122,7 @@ function onFrameLeave() {
   transition: transform 200ms ease;
 }
 
-/* Vidéo décorative posée sur l'image : masquée par défaut, elle ne
-   remplace l'image qu'une fois une image réellement prête à l'écran
-   (pas de flash noir pendant le chargement). */
+/* Masquée jusqu'à ce qu'elle soit prête, pour éviter un flash noir. */
 .poster__video {
   position: absolute;
   inset: 0;
@@ -147,8 +138,6 @@ function onFrameLeave() {
   opacity: 1;
 }
 
-/* Léger effet « on soulève le cadre » : au survol seulement, jamais sur
-   tactile ni sous 760 px où les rotations sont à zéro. */
 @media (hover: hover) and (pointer: fine) and (min-width: 761px) {
   .poster__frame:hover {
     transform: rotate(1.5deg) translateY(-4px);

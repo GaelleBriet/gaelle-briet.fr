@@ -159,9 +159,6 @@ defineProps<{
   }
 }
 
-/* Au survol : la coupure se redresse un peu et passe devant les autres,
-   comme si on la décollait du tas pour la lire. Toujours sans ombre.
-   Seulement là où les trois se chevauchent (souris, > 1020 px). */
 @media (hover: hover) and (pointer: fine) and (min-width: 1021px) {
   .clipping--1:hover {
     transform: rotate(-0.5deg) translateY(-6px);
@@ -179,8 +176,6 @@ defineProps<{
   }
 }
 
-/* Même geste au clavier, quel que soit l'écran : le lien e-mail ne doit
-   jamais rester à moitié caché sous la coupure du dessus une fois focus. */
 .clipping--1:focus-within {
   transform: rotate(-0.5deg) translateY(-6px);
   z-index: 10;

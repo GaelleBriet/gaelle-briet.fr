@@ -173,8 +173,6 @@ defineProps<{ project: Project }>()
   transition: transform 200ms ease;
 }
 
-/* Même logique de soulèvement que l'affiche du hero, réservée aux fiches
-   qui ont une vraie capture (jamais « Place libre », qui n'en a pas). */
 @media (hover: hover) and (pointer: fine) and (min-width: 761px) {
   .card--service .card__photo:hover {
     transform: rotate(1deg) translateY(-3px);

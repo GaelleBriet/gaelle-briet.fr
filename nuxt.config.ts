@@ -75,10 +75,6 @@ export default defineNuxtConfig({
 
   features: {
     inlineStyles: true,
-    // La page n'a aucune interactivité : ni onglet, ni menu, ni formulaire.
-    // On coupe donc l'hydratation en production — ~195 ko de JS en moins.
-    // Le dev garde le HMR.
-    noScripts: 'production',
   },
 
   experimental: {
