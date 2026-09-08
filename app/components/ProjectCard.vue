@@ -146,6 +146,8 @@ defineProps<{ project: Project }>()
   background: var(--cream);
   box-shadow: var(--shadow-photo);
   transform: rotate(1deg);
+  overflow: hidden;
+  transition: transform 200ms ease, box-shadow 200ms ease;
 }
 
 .card--construction .card__photo {
@@ -161,6 +163,26 @@ defineProps<{ project: Project }>()
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 200ms ease;
+}
+
+/* Même logique de soulèvement que l'affiche du hero, réservée aux fiches
+   qui ont une vraie capture (jamais « Place libre », qui n'en a pas). */
+@media (hover: hover) and (pointer: fine) and (min-width: 761px) {
+  .card--service .card__photo:hover {
+    transform: rotate(1deg) translateY(-3px);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .card--construction .card__photo:hover {
+    transform: rotate(-1deg) translateY(-3px);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .card--service .card__photo:hover .card__image,
+  .card--construction .card__photo:hover .card__image {
+    transform: scale(1.04);
+  }
 }
 
 .card__title {
