@@ -15,7 +15,7 @@
   compagnon de jeu pour meneurs du jeu de rôle Symbaroum (Vue.js, TypeScript,
   Supabase).
 - [MémoPatte](https://github.com/GaelleBriet/memo-patte-vue) : carnet de santé
-  pour animaux — vaccins, vermifuges, poids, rappels (Vue.js, en construction).
+  pour animaux - vaccins, vermifuges, poids, rappels (Vue.js, en construction).
 
 ## Contact
 

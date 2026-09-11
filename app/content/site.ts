@@ -14,40 +14,50 @@ export const site = {
   brandAlt: 'Marque GB',
   sealAlt: 'Sceau Gaëlle Briet',
   stack: 'Angular · Vue.js · TypeScript',
+  /** Métier déclaré dans les données structurées (JSON-LD). */
+  jobTitle: 'Développeuse d\'applications web',
+  /** Localisation au niveau de la commune seulement, sans adresse postale. */
+  locality: {
+    city: 'Cavaillon',
+    region: 'Provence-Alpes-Côte d\'Azur',
+    country: 'FR',
+  },
   copyright: '© 2026 Gaëlle Briet · Développeuse web · approche produit',
   links: {
     github: { label: 'GitHub · GaelleBriet', url: 'https://github.com/GaelleBriet' },
     linkedin: { label: 'LinkedIn · gaellebriet', url: 'https://www.linkedin.com/in/gaelle-briet-666184227/' },
   },
   zone: {
-    title: 'Provence-Alpes-Côte d\'Azur',
+    title: 'Cavaillon',
+    region: 'Provence-Alpes-Côte d\'Azur',
     note: 'Missions à distance, déplacements ponctuels.',
   },
 } as const
 
 export const meta = {
-  title: 'Gaëlle Briet · Développeuse web, approche produit',
+  title: 'Gaëlle Briet · Développeuse d’applications web à Cavaillon',
   description:
-    'Applications web et outils métier, de l\'idée aux premières versions utilisables. Développeuse front-end freelance en Provence, missions à distance.',
+    'Applications web et outils métier sur mesure, de l’idée aux premières versions utilisables. Développeuse freelance à Cavaillon · Provence',
   /** 1200 × 630, régénérable depuis tools/og-image.html (voir le README). */
   image: '/og-image.jpg',
   imageAlt: 'Gaëlle Briet · Des outils qu\'on utilise vraiment',
 } as const
 
 export const nav: NavLink[] = [
-  { label: 'Projets', href: '#projets' },
-  { label: 'Méthode', href: '#methode' },
+  { label: 'Projets', href: '/#projets' },
+  { label: 'Méthode', href: '/#methode' },
 ]
 
 // Le bouton mène à la section « Travaillons ensemble », pas au pied de page.
-export const navCta: NavLink = { label: 'Contact', href: '#missions' }
+export const navCta: NavLink = { label: 'Contact', href: '/#missions' }
 
 export const hero = {
-  eyebrow: 'Applications web et outils métier',
+  eyebrow: 'Applications web et outils métier · Cavaillon - Provence',
   title: 'Des outils qu\'on utilise vraiment',
   lead: 'Je développe des applications web et des outils métier, de l\'idée aux premières versions utilisables.',
   pitch:
     'Je peux intervenir dès les premières réflexions : comprendre le besoin, poser les bonnes questions, proposer des maquettes et construire une solution adaptée. Parce que livrer la bonne chose m\'intéresse autant que bien la construire.',
+  location: 'Basée à Cavaillon, dans le Vaucluse, je conçois des applications web et outils métier pour des projets locaux comme à distance.',
   actions: {
     primary: { label: 'Voir les projets', href: '#projets' },
     secondary: { label: 'Écrire', href: 'mailto:hello@gaelle-briet.fr' },
@@ -113,9 +123,36 @@ export const footer = {
     navigation: 'Navigation',
   },
   navigation: [
-    { label: 'Accueil', href: '#haut' },
-    { label: 'Projets', href: '#projets' },
-    { label: 'Méthode', href: '#methode' },
-    { label: 'Missions', href: '#missions' },
+    { label: 'Accueil', href: '/#haut' },
+    { label: 'Projets', href: '/#projets' },
+    { label: 'Méthode', href: '/#methode' },
+    { label: 'Missions', href: '/#missions' },
   ] satisfies NavLink[],
+} as const
+
+// Données structurées (JSON-LD) de l'accueil, assemblées dans pages/index.vue.
+export const structuredData = {
+  knowsAbout: [
+    'Développement d\'applications web',
+    'Applications métier',
+    'Angular',
+    'Vue.js',
+    'TypeScript',
+    'Conception produit',
+    'Expérience utilisateur',
+  ],
+  service: {
+    name: 'Développement d\'applications web sur mesure',
+    serviceType: [
+      'Développement d\'application web',
+      'Développement d\'outil métier',
+      'Conception d\'application sur mesure',
+    ],
+    areaServed: [
+      { type: 'City', name: 'Cavaillon' },
+      { type: 'AdministrativeArea', name: 'Vaucluse' },
+      { type: 'AdministrativeArea', name: 'Provence-Alpes-Côte d\'Azur' },
+      { type: 'Country', name: 'France' },
+    ],
+  },
 } as const

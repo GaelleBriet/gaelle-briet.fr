@@ -33,7 +33,7 @@ export const clippings: Clipping[] = [
   {
     label: 'Où / comment',
     lines: [
-      'Depuis la Provence · À distance',
+      'Depuis Cavaillon, en Provence · À distance',
       'Déplacements ponctuels · Temps partiel',
     ],
   },

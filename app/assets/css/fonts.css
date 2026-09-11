@@ -2,16 +2,16 @@
    Sous-ensemble « latin » uniquement : suffisant pour le français,
    les fichiers latin-ext / cyrillique ne sont pas embarqués. */
 
-/* Fraunces — titres */
+/* Fraunces - titres */
 @import '@fontsource/fraunces/latin-500.css';
 @import '@fontsource/fraunces/latin-600.css';
 @import '@fontsource/fraunces/latin-700.css';
 
-/* Karla — texte courant */
+/* Karla - texte courant */
 @import '@fontsource/karla/latin-400.css';
 @import '@fontsource/karla/latin-500.css';
 @import '@fontsource/karla/latin-600.css';
 
-/* IBM Plex Mono — labels, statuts, légendes */
+/* IBM Plex Mono - labels, statuts, légendes */
 @import '@fontsource/ibm-plex-mono/latin-500.css';
 @import '@fontsource/ibm-plex-mono/latin-600.css';

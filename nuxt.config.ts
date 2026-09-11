@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       // /introuvable est prérendue puis renommée en 404.html (hook `close`).
-      routes: ['/', '/introuvable'],
+      routes: ['/', '/projets/symbaroum-bestiary-manager/', '/introuvable'],
     },
   },
 
