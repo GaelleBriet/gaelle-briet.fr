@@ -107,7 +107,7 @@ soit toujours le bon.
 ## Page 404
 
 Cloudflare Pages sert `/404.html` pour toute URL inconnue. Nuxt écrit ce
-fichier comme une coquille vide à remplir côté client — inutilisable ici
+fichier comme une coquille vide à remplir côté client - inutilisable ici
 puisqu'aucun JS n'est servi. Le contournement, dans `nuxt.config.ts` :
 
 1. `app/error.vue` dessine la page d'erreur (seul dessin, réutilisé partout).
@@ -138,7 +138,7 @@ chromium --headless --window-size=1200,630 --virtual-time-budget=8000 \
 magick /tmp/og.png -quality 88 -strip public/og-image.jpg
 ```
 
-## Déploiement — Cloudflare Pages
+## Déploiement - Cloudflare Pages
 
 Chaque push sur `main` redéploie. Les autres branches produisent une URL de
 prévisualisation, pratique pour valider une modification avant de fusionner.
@@ -162,7 +162,7 @@ prévisualisation, pratique pour valider une modification avant de fusionner.
 
 > **Pourquoi `dist` et pas `.output/public`** : sur Cloudflare, Nitro
 > détecte l'environnement et bascule sur le preset `cloudflare-pages-static`,
-> qui écrit dans `dist` — et y ajoute `_headers` (cache d'un an sur
+> qui écrit dans `dist` - et y ajoute `_headers` (cache d'un an sur
 > `/_nuxt/*`) et la ligne `/* /404.html 404` dans `_redirects`. En local
 > le preset reste `static` (sortie `.output/public`) mais `dist` existe
 > aussi, en lien symbolique. `dist` est donc juste dans les deux cas.
@@ -176,7 +176,7 @@ prévisualisation, pratique pour valider une modification avant de fusionner.
 Cloudflare met parfois en avant le formulaire **Workers** (reconnaissable à
 la commande `npx wrangler deploy`). Ce site est prévu pour **Pages** : dans
 « Créer une application », choisir l'onglet **Pages**. Ne pas ajouter de
-`wrangler.jsonc` à la racine — Pages refuse la clé `assets` et le build
+`wrangler.jsonc` à la racine - Pages refuse la clé `assets` et le build
 échoue.
 
 ### 2. Brancher le domaine
@@ -188,7 +188,7 @@ seuls les serveurs de noms changent.
 
 L'e-mail (`hello@`) passe par Proton, avec Infomaniak en secours : la zone
 contient donc des MX, SPF, DKIM, DMARC, SRV et CNAME d'autoconfiguration
-qu'il faut **recopier à l'identique** — rien de tout ça ne concerne le site,
+qu'il faut **recopier à l'identique** - rien de tout ça ne concerne le site,
 mais tout ça concerne le courrier.
 
 1. Cloudflare → **Ajouter un domaine** (ou « Commencer le transfert DNS »
@@ -196,7 +196,7 @@ mais tout ça concerne le courrier.
 2. **Ne pas se fier au scan automatique** : il ne peut pas deviner les
    sélecteurs DKIM ni les SRV. Importer plutôt le fichier de zone
    (DNS → Records → *Import and Export*), en laissant **tous** les
-   enregistrements en « DNS only » (nuage gris) — ce sont des
+   enregistrements en « DNS only » (nuage gris) - ce sont des
    enregistrements de courrier, le proxy les casserait.
 3. Chez Infomaniak → domaine → **Serveurs de noms** → serveurs
    personnalisés → les deux `*.ns.cloudflare.com` indiqués par Cloudflare.
@@ -265,7 +265,7 @@ Trois combinaisons de la palette passent sous le seuil AA de 4,5:1 :
 | Bleu pétrole sur papier | 4,42:1 | Libellés des coupures |
 
 C'est un arbitrage assumé : la palette fait l'identité du site. Le premier
-cas est structurel — même du texte encre sur corail ne dépasse pas 3,8:1, et
+cas est structurel - même du texte encre sur corail ne dépasse pas 3,8:1, et
 aucune taille de caractère ne compense un écart de contraste. Y remédier
 supposerait d'assombrir le corail au-delà de #DC6247.
 

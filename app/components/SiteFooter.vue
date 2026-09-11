@@ -8,7 +8,10 @@ import { footer, site } from '~/content/site'
       <div class="footer__columns">
         <section class="footer__column">
           <h2 class="footer__label">{{ footer.columns.zone }}</h2>
-          <p class="footer__zone">{{ site.zone.title }}</p>
+          <p class="footer__zone">
+            <span class="footer__city">{{ site.zone.title }}</span>
+            <span class="footer__region">{{ site.zone.region }}</span>
+          </p>
           <p class="footer__note">{{ site.zone.note }}</p>
         </section>
 
@@ -67,6 +70,14 @@ import { footer, site } from '~/content/site'
   border-top: var(--rule);
 }
 
+/* Dès qu'il y a la place, la zone (gros caractères) prend une colonne plus
+   large que les deux listes, qui se resserrent à droite. */
+@media (min-width: 761px) {
+  .footer__columns {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
 .footer__label {
   margin-bottom: 14px;
   font-family: var(--font-mono);
@@ -80,8 +91,23 @@ import { footer, site } from '~/content/site'
 .footer__zone {
   font-family: var(--font-display);
   font-weight: var(--fw-display);
-  font-size: clamp(20px, 5vw, 24px);
   line-height: 1.2;
+}
+
+/* Ville puis région, chacune sur sa ligne : plus de coupure au milieu
+   de « Côte d'Azur ». */
+.footer__city,
+.footer__region {
+  display: block;
+}
+
+.footer__city {
+  font-size: clamp(20px, 5vw, 24px);
+}
+
+.footer__region {
+  margin-top: 2px;
+  font-size: clamp(16px, 4vw, 18px);
 }
 
 .footer__note {

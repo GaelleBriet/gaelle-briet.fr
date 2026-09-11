@@ -5,7 +5,7 @@ import { nav, navCta, site } from '~/content/site'
 <template>
   <header class="header">
     <nav class="header__bar container" aria-label="Navigation principale">
-      <a class="brand" href="#haut">
+      <a class="brand" href="/#haut">
         <img
           class="brand__mark"
           src="/images/marque-gb.svg"

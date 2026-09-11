@@ -1,26 +1,56 @@
 <script setup lang="ts">
 import { projects, projectsSection } from '~/content/projects'
 import { clippings } from '~/content/clippings'
-import { hero, meta, method, missions, site } from '~/content/site'
+import { hero, meta, method, missions, site, structuredData } from '~/content/site'
 
-// Schema.org Person : aide Google et les moteurs IA à identifier l'entité
-// derrière le site (aucune donnée client, uniquement des infos publiques
-// déjà présentes sur la page).
-const personSchema = {
+// Données structurées : qui est derrière le site (Person), le nom du site
+// (WebSite, utilisé par Google pour afficher « Gaëlle Briet » dans les
+// résultats) et ce qu'elle propose (Service). Textes : content/site.ts.
+const homeUrl = `${site.url}/`
+const personId = `${site.url}/#gaelle`
+
+const structuredGraph = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: site.name,
-  jobTitle: site.subtitle,
-  url: site.url,
-  email: `mailto:${site.email}`,
-  image: site.url + '/images/portrait-600.webp',
-  knowsAbout: site.stack.split(' · '),
-  address: {
-    '@type': 'PostalAddress',
-    addressRegion: site.zone.title,
-    addressCountry: 'FR',
-  },
-  sameAs: [site.links.github.url, site.links.linkedin.url],
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': personId,
+      'name': site.name,
+      'url': homeUrl,
+      'jobTitle': site.jobTitle,
+      'description': meta.description,
+      'email': `mailto:${site.email}`,
+      'image': `${site.url}/images/portrait-600.webp`,
+      'address': {
+        '@type': 'PostalAddress',
+        'addressLocality': site.locality.city,
+        'addressRegion': site.locality.region,
+        'addressCountry': site.locality.country,
+      },
+      'knowsAbout': structuredData.knowsAbout,
+      'sameAs': [site.links.linkedin.url, site.links.github.url],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site.url}/#website`,
+      'url': homeUrl,
+      'name': site.name,
+      'inLanguage': 'fr-FR',
+      'publisher': { '@id': personId },
+    },
+    {
+      '@type': 'Service',
+      '@id': `${site.url}/#service`,
+      'name': structuredData.service.name,
+      'url': homeUrl,
+      'provider': { '@id': personId },
+      'serviceType': structuredData.service.serviceType,
+      'areaServed': structuredData.service.areaServed.map(area => ({
+        '@type': area.type,
+        'name': area.name,
+      })),
+    },
+  ],
 }
 
 useHead({
@@ -42,7 +72,7 @@ useHead({
   script: [
     {
       type: 'application/ld+json',
-      innerHTML: JSON.stringify(personSchema),
+      innerHTML: JSON.stringify(structuredGraph),
     },
   ],
 })
@@ -83,6 +113,7 @@ useSeoMeta({
           <div class="hero__lead">
             <p>{{ hero.lead }}</p>
             <p>{{ hero.pitch }}</p>
+            <p class="hero__location">{{ hero.location }}</p>
           </div>
           <div class="hero__actions">
             <a class="btn btn--primary" :href="hero.actions.primary.href">
@@ -200,6 +231,12 @@ useSeoMeta({
   font-size: var(--fs-body-lg);
   line-height: var(--lh-lead);
   text-wrap: pretty;
+}
+
+/* Ligne de localisation sous le pitch : un cran plus petite. */
+.hero__location {
+  margin-top: 12px;
+  font-size: var(--fs-body);
 }
 
 .hero__actions {

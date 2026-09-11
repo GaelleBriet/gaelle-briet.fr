@@ -35,6 +35,11 @@ defineProps<{ project: Project }>()
 
       <h3 class="card__title">{{ project.title }}</h3>
       <p class="card__text">{{ project.text }}</p>
+      <a
+        v-if="project.caseStudy"
+        class="card__link"
+        :href="project.caseStudy.href"
+      >{{ project.caseStudy.label }}</a>
       <p class="card__stack">{{ project.stack }}</p>
 
       <a
@@ -211,6 +216,19 @@ defineProps<{ project: Project }>()
   font-weight: var(--fw-mono);
   letter-spacing: var(--track-mono-sm);
   text-transform: uppercase;
+}
+
+/* Lien vers l'étude de cas, sous le texte : un simple lien souligné qui ne
+   concurrence pas le bouton, et ne décale pas le filet du bas de fiche. */
+.card__link {
+  align-self: flex-start;
+  font-size: var(--fs-card-body);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.card__link:hover {
+  color: var(--coral);
 }
 
 /* Sous 760 px tous les onglets s'alignent à gauche. */

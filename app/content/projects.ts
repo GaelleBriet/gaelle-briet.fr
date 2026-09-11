@@ -26,6 +26,11 @@ export interface Project {
     /** true pour les liens sortants (GitHub). */
     external: boolean
   }
+  /** Lien vers la page d'étude de cas, s'il y en a une. */
+  caseStudy?: {
+    label: string
+    href: string
+  }
 }
 
 export const projects: Project[] = [
@@ -48,6 +53,10 @@ export const projects: Project[] = [
       label: 'Voir sur GitHub',
       href: 'https://github.com/GaelleBriet/symbaroum-bestiary',
       external: true,
+    },
+    caseStudy: {
+      label: 'Lire l\'étude de cas',
+      href: '/projets/symbaroum-bestiary-manager/',
     },
   },
   {
