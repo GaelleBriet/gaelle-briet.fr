@@ -59,6 +59,7 @@ export const mentionsLegales = {
     paragraphs: [
       'Le site gaelle-briet.fr ne dépose aucun cookie et ne mesure pas son audience. Il n\'a pas de formulaire et ne charge rien depuis un service tiers : polices, images et vidéos sont servies par le site lui-même.',
       `Les e-mails envoyés à ${site.email} ne servent qu'à y répondre.`,
+      `Vous pouvez demander l'accès aux données qui vous concernent, leur rectification ou leur effacement en écrivant à ${site.email}, et introduire une réclamation auprès de la CNIL (www.cnil.fr).`,
       'Pour délivrer les pages, l\'hébergeur traite les données techniques de connexion, dont l\'adresse IP.',
     ],
     memopatte: {
