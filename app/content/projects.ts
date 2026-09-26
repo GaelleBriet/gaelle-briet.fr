@@ -31,6 +31,11 @@ export interface Project {
     label: string
     href: string
   }
+  /** Démo en ligne, s'il y en a une : bouton corail avant GitHub, toujours sortant. */
+  demo?: {
+    label: string
+    href: string
+  }
 }
 
 export const projects: Project[] = [
@@ -50,13 +55,17 @@ export const projects: Project[] = [
       alt: 'Liste des créatures dans Symbaroum Bestiary Manager',
     },
     action: {
-      label: 'Voir sur GitHub',
+      label: 'GitHub',
       href: 'https://github.com/GaelleBriet/symbaroum-bestiary',
       external: true,
     },
     caseStudy: {
       label: 'Lire l\'étude de cas',
       href: '/projets/symbaroum-bestiary-manager/',
+    },
+    demo: {
+      label: 'Démo',
+      href: 'https://symbaroum-bestiary.vercel.app/?demo',
     },
   },
   {
