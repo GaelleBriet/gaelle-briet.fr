@@ -128,6 +128,7 @@ export const footer = {
     { label: 'Méthode', href: '/#methode' },
     { label: 'Missions', href: '/#missions' },
   ] satisfies NavLink[],
+  legal: { label: 'Mentions légales', href: '/mentions-legales/' } satisfies NavLink,
 } as const
 
 // Données structurées (JSON-LD) de l'accueil, assemblées dans pages/index.vue.

@@ -50,7 +50,10 @@ import { footer, site } from '~/content/site'
           >
           <span>{{ site.copyright }}</span>
         </span>
-        <span>{{ site.stack }}</span>
+        <span class="footer__end">
+          <span>{{ site.stack }}</span>
+          <a class="footer__legal" :href="footer.legal.href">{{ footer.legal.label }}</a>
+        </span>
       </div>
     </div>
   </footer>
@@ -159,6 +162,29 @@ import { footer, site } from '~/content/site'
   align-items: center;
   flex-wrap: wrap;
   gap: 24px;
+}
+
+.footer__end {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+.footer__legal {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer__legal:hover {
+  color: var(--coral);
+}
+
+@media (max-width: 760px) {
+  .footer__legal {
+    padding-block: 6px;
+    margin-block: -6px;
+  }
 }
 
 .footer__seal-image {
