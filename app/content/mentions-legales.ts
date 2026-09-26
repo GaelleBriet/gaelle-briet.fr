@@ -7,11 +7,7 @@ export interface LegalRow {
   href?: string
 }
 
-/**
- * Numéro de téléphone de l'éditrice, à renseigner ici (ex. '06 12 34 56 78').
- * Tant que la valeur est vide, la ligne « Téléphone » n'est pas affichée.
- */
-export const editorPhone = ''
+export const editorPhone = '06 67 33 58 14'
 
 const editorRows: LegalRow[] = [
   { label: 'Éditrice', value: 'Gaëlle Briet, entrepreneure individuelle' },
