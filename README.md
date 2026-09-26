@@ -38,7 +38,7 @@ Aucun texte n'est écrit dans un composant. Tout est dans `app/content/` :
 | `projects.ts` | Les trois fiches projet |
 | `roadmap.ts` | Les cinq étapes de la feuille de route |
 | `clippings.ts` | Les trois petites annonces |
-| `mentions-legales.ts` | Page Mentions légales ; le téléphone de l'éditrice se renseigne dans `editorPhone` (ligne masquée tant qu'il est vide) |
+| `mentions-legales.ts` | Page Mentions légales (éditrice, hébergeur, données personnelles) |
 
 Modifier un texte, c'est modifier un de ces quatre fichiers. Les composants
 ne font que la mise en forme.
