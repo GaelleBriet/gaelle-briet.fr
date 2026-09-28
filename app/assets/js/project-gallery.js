@@ -52,9 +52,10 @@
     })
 
     dialog.querySelector('[data-gallery-close]').addEventListener('click', () => dialog.close())
-    // Un clic sur le fond sombre ferme ; Échap est géré par le navigateur.
+    // La grande vue couvre l'écran : un clic hors de la fiche et des
+    // commandes ferme. Échap est géré par le navigateur.
     dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) dialog.close()
+      if (!event.target.closest('figure, button, [data-strip-count]')) dialog.close()
     })
     dialog.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowLeft') view.go(view.index() - 1)

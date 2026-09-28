@@ -84,8 +84,10 @@ pétrole à gauche, `construction` en moutarde au tiers, `libre` en pointillé
 ## Galeries des fiches
 
 Chaque fiche montre ses `images` dans une bande qu'on fait glisser ; un
-clic ouvre la grande vue (un `<dialog>`), avec flèches, compteur, légende
-et touches ← → / Échap. La première image sert de vignette.
+clic ouvre la grande vue (un `<dialog>`) : la capture posée dans une grande
+fiche cartonnée, avec l'onglet au nom du projet, sur la page voilée de
+crème. Flèches, compteur, légende, touches ← → et Échap, clic à côté pour
+fermer. La première image sert de vignette.
 
 Trois fichiers par image, dans `public/images/projets/` :
 
@@ -94,8 +96,9 @@ Trois fichiers par image, dans `public/images/projets/` :
 | `…-800.webp` et `…-400.webp` | 16:10 exactement (800 × 500, 400 × 250) | vignette de la fiche |
 | `…-grand.webp` | libre, 1600 px sur le grand côté | grande vue, chargée à l'ouverture seulement |
 
-Pour un écran de téléphone, la vignette est un cadrage 16:10 sur le haut
-utile de l'écran, et la grande vue montre l'écran entier :
+La vignette est un gros plan lisible à la taille de la fiche ; la grande
+vue montre l'écran entier. Pour un écran de téléphone, le gros plan est un
+cadrage 16:10 sur le haut utile de l'écran :
 
 ```bash
 # capture 390 × 844 prise en ×3 (1170 × 2532), cadrage à partir de y = 44 px

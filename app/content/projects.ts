@@ -57,6 +57,7 @@ export const projects: Project[] = [
     title: 'Symbaroum Bestiary Manager',
     text: 'Compagnon de jeu pour meneurs de Symbaroum. Conçu pour un utilisateur réel, puis itéré à partir de ce qu\'il en a fait à table.',
     stack: 'Vue.js · TypeScript · Supabase',
+    // Vignettes : gros plans lisibles ; grande vue : l'écran entier de la démo.
     images: [
       {
         thumb: {
@@ -69,21 +70,21 @@ export const projects: Project[] = [
       },
       {
         thumb: {
-          src: '/images/projets/symbaroum-combat-800.webp',
-          srcset: '/images/projets/symbaroum-combat-400.webp 400w, /images/projets/symbaroum-combat-800.webp 800w',
-        },
-        full: { src: '/images/projets/symbaroum-combat-grand.webp', width: 1600, height: 1000 },
-        alt: 'Panneau de combat du Haut Troll : attaque et défense des joueurs, défense, dégâts et absorption',
-        caption: 'Le combat : les modificateurs des joueurs sont calculés à partir des attributs du monstre.',
-      },
-      {
-        thumb: {
           src: '/images/projets/symbaroum-fiche-800.webp',
           srcset: '/images/projets/symbaroum-fiche-400.webp 400w, /images/projets/symbaroum-fiche-800.webp 800w',
         },
         full: { src: '/images/projets/symbaroum-fiche-grand.webp', width: 1600, height: 1000 },
-        alt: 'Fiche du Haut Troll : rang, attributs bruts et bonus, attaque des joueurs',
-        caption: 'La fiche d\'un monstre : ses attributs et les bonus qui en découlent.',
+        alt: 'Fiche du Haut Troll : attributs et bonus, modificateurs de combat des joueurs, capacités et talents',
+        caption: 'La fiche d\'un monstre : ses attributs, et les modificateurs de combat des joueurs qui en découlent.',
+      },
+      {
+        thumb: {
+          src: '/images/projets/symbaroum-edition-800.webp',
+          srcset: '/images/projets/symbaroum-edition-400.webp 400w, /images/projets/symbaroum-edition-800.webp 800w',
+        },
+        full: { src: '/images/projets/symbaroum-edition-grand.webp', width: 1600, height: 1000 },
+        alt: 'Formulaire de modification de l\'Elfe d\'Automne : identité, résistance et endurance, attributs, traits et talents',
+        caption: 'La saisie d\'un monstre : identité, résistance, attributs, traits et talents.',
       },
     ],
     action: {

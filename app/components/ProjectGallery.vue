@@ -73,35 +73,41 @@ const sizes = '(max-width: 640px) calc(100vw - 108px), (max-width: 960px) calc(5
       </p>
     </div>
 
-    <!-- Grande vue : dans la couche supérieure une fois ouverte, elle échappe
-         à la rotation et au rognage de la fiche. -->
+    <!-- Grande vue : la capture posée dans une grande fiche cartonnée, onglet
+         au nom du projet, sur la page voilée. Dans la couche supérieure une
+         fois ouverte, elle échappe à la rotation et au rognage de la fiche. -->
     <dialog class="lightbox" :aria-label="title">
       <div class="lightbox__inner">
         <div class="lightbox__track" data-strip-track>
-          <figure v-for="image in images" :key="image.full.src" class="lightbox__slide">
-            <img
-              class="lightbox__image"
-              :src="image.full.src"
-              :width="image.full.width"
-              :height="image.full.height"
-              :alt="image.alt"
-              loading="lazy"
-              decoding="async"
-            >
-            <figcaption class="lightbox__caption">{{ image.caption }}</figcaption>
-          </figure>
+          <div v-for="image in images" :key="image.full.src" class="lightbox__slide">
+            <figure class="lightbox__frame">
+              <p class="lightbox__tab" aria-hidden="true">{{ title }}</p>
+              <img
+                class="lightbox__image"
+                :src="image.full.src"
+                :width="image.full.width"
+                :height="image.full.height"
+                :alt="image.alt"
+                loading="lazy"
+                decoding="async"
+              >
+              <figcaption class="lightbox__caption">{{ image.caption }}</figcaption>
+            </figure>
+          </div>
         </div>
 
-        <div class="lightbox__bar">
-          <button type="button" class="gallery__arrow" data-strip-prev :aria-label="labels.previous" hidden>
-            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M10.5 2 4.5 8l6 6" fill="none" stroke="currentColor" stroke-width="2" /></svg>
-          </button>
-          <p class="gallery__count" data-strip-count aria-live="polite" hidden>
-            <span data-strip-current>1</span> / {{ images.length }}
-          </p>
-          <button type="button" class="gallery__arrow" data-strip-next :aria-label="labels.next" hidden>
-            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M5.5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" /></svg>
-          </button>
+        <div class="lightbox__controls">
+          <div class="lightbox__nav">
+            <button type="button" class="gallery__arrow" data-strip-prev :aria-label="labels.previous" hidden>
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M10.5 2 4.5 8l6 6" fill="none" stroke="currentColor" stroke-width="2" /></svg>
+            </button>
+            <p class="gallery__count" data-strip-count aria-live="polite" hidden>
+              <span data-strip-current>1</span> / {{ images.length }}
+            </p>
+            <button type="button" class="gallery__arrow" data-strip-next :aria-label="labels.next" hidden>
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M5.5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" /></svg>
+            </button>
+          </div>
           <button type="button" class="btn btn--sm btn--outline-ink lightbox__close" data-gallery-close>
             {{ labels.close }}
           </button>
@@ -214,33 +220,37 @@ const sizes = '(max-width: 640px) calc(100vw - 108px), (max-width: 960px) calc(5
 
 /* ---------- Grande vue ---------- */
 
+/* Plein écran et transparente : seule la fiche est dessinée, elle épouse
+   la capture, sans vide autour. */
 .lightbox {
-  width: min(1080px, 100vw - 32px);
+  width: 100vw;
+  height: 100dvh;
   max-width: none;
-  max-height: calc(100dvh - 32px);
+  max-height: none;
+  margin: 0;
   padding: 0;
-  border: var(--border);
-  background: var(--cream-card);
+  border: 0;
+  background: transparent;
   color: var(--ink);
   overflow: hidden;
 }
 
+/* La page reste devinable sous un voile crème (--cream à 85 %). */
 .lightbox::backdrop {
-  background: rgb(46 42 38 / .85);
+  background: rgb(243 234 211 / .85);
 }
 
 .lightbox__inner {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
   gap: 14px;
-  max-height: calc(100dvh - 32px);
-  padding: 18px;
+  height: 100%;
+  padding: 20px 24px;
   box-sizing: border-box;
 }
 
 .lightbox__track {
   display: flex;
-  flex: 1;
   min-height: 0;
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -255,61 +265,104 @@ const sizes = '(max-width: 640px) calc(100vw - 108px), (max-width: 960px) calc(5
 .lightbox__slide {
   display: flex;
   flex: 0 0 100%;
-  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
   min-width: 0;
-  margin: 0;
   scroll-snap-align: start;
 }
 
-/* La place restante sous la barre, la légende et les marges : l'écran en
-   hauteur de MémoPatte tient entier, la capture en largeur aussi. */
+/* La grande fiche : même carton, même ombre que les fiches de l'accueil.
+   La marge haute laisse la place à l'onglet. */
+.lightbox__frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 30px 0 0;
+  padding: 20px 20px 18px;
+  border: var(--border);
+  background: var(--cream-card);
+  box-shadow: var(--shadow-card);
+}
+
+.lightbox__tab {
+  position: absolute;
+  top: -30px;
+  left: -1.5px;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  border: var(--border);
+  border-bottom: none;
+  background: var(--teal);
+  color: var(--cream);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  font-weight: var(--fw-mono);
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Ce qui reste une fois ôtés les marges, l'onglet, le cadre, la légende et
+   les commandes : la capture en largeur comme l'écran en hauteur tiennent. */
 .lightbox__image {
+  display: block;
   width: auto;
   height: auto;
-  max-width: 100%;
-  max-height: calc(100dvh - 190px);
+  max-width: calc(100vw - 96px);
+  max-height: calc(100dvh - 260px);
   border: var(--border);
 }
 
+/* Largeur nulle, largeur minimale 100 % : la légende suit la capture sans
+   jamais élargir la fiche. */
 .lightbox__caption {
-  max-width: var(--measure);
+  width: 0;
+  min-width: 100%;
   font-size: var(--fs-body);
   line-height: var(--lh-body);
-  text-align: center;
   text-wrap: pretty;
 }
 
-.lightbox__bar {
+/* Flèches et compteur au centre, « Fermer » à droite, sur la même ligne. */
+.lightbox__controls {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.lightbox__nav {
   display: flex;
+  grid-column: 2;
   align-items: center;
   gap: var(--gap-sm);
-  padding-top: 14px;
-  border-top: var(--rule);
 }
 
 .lightbox__close {
-  margin-left: auto;
+  grid-column: 3;
+  justify-self: end;
 }
 
-/* Sur téléphone, la grande vue prend tout l'écran. */
 @media (max-width: 760px) {
-  .lightbox {
-    width: 100vw;
-    height: 100dvh;
-    max-height: none;
-    border: none;
+  /* Sur petit écran, la page qui transparaît brouille la fiche : fond plein. */
+  .lightbox::backdrop {
+    background: var(--cream);
   }
 
   .lightbox__inner {
-    height: 100%;
-    max-height: none;
     padding: 16px;
   }
 
+  .lightbox__frame {
+    padding: 14px 14px 12px;
+  }
+
   .lightbox__image {
-    max-height: calc(100dvh - 170px);
+    max-width: calc(100vw - 64px);
+    max-height: calc(100dvh - 290px);
   }
 }
 </style>
