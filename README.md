@@ -1,8 +1,11 @@
 # gaelle-briet.fr
 
-Site vitrine d'une page. Nuxt 4 en génération statique, CSS natif, aucune
-dépendance d'exécution. Le build produit du HTML, du CSS et des images :
-**aucun JavaScript n'est servi en production**.
+Site vitrine : une page d'accueil, une étude de cas, les mentions légales.
+Nuxt 4 en génération statique, CSS natif, aucune dépendance d'exécution. Le
+build produit du HTML, du CSS et des images : **Nuxt ne sert aucun
+JavaScript en production**. Seule exception, un script inline d'une
+cinquantaine de lignes pour la vidéo de l'affiche (voir « Vidéo de
+l'affiche »).
 
 ## Démarrer
 
@@ -16,6 +19,7 @@ npm run dev        # http://localhost:3000
 ```bash
 npm run generate   # écrit .output/public
 npm run preview    # sert le résultat en local
+npm run typecheck  # vérifie les types (vue-tsc)
 ```
 
 `npm run generate` est la commande de déploiement. Elle ne dépend d'aucun
@@ -39,8 +43,9 @@ Aucun texte n'est écrit dans un composant. Tout est dans `app/content/` :
 | `roadmap.ts` | Les cinq étapes de la feuille de route |
 | `clippings.ts` | Les trois petites annonces |
 | `mentions-legales.ts` | Page Mentions légales (éditrice, hébergeur, données personnelles) |
+| `etude-symbaroum.ts` | Étude de cas Symbaroum Bestiary Manager |
 
-Modifier un texte, c'est modifier un de ces quatre fichiers. Les composants
+Modifier un texte, c'est modifier un de ces fichiers. Les composants
 ne font que la mise en forme.
 
 ### Ajouter un projet
@@ -127,6 +132,35 @@ n'a normalement rien à faire.
 
 Pour modifier le texte du 404, éditer `app/error.vue`.
 
+## Vidéo de l'affiche
+
+L'affiche du hero s'anime : en boucle au survol à la souris. Sur écran
+tactile, elle joue une fois d'elle-même quand l'affiche apparaît, puis à
+chaque toucher (toucher pendant la lecture l'arrête) ; une consigne
+« Touchez l'affiche pour l'animer » s'affiche sous la légende. Rien ne se
+charge avant ce déclenchement. Avec le mouvement réduit, jamais
+d'animation ; en mode économie de données, pas de lecture automatique.
+
+Nuxt ne servant aucun JS (`features.noScripts`), c'est un petit script
+inline qui s'en charge : `app/assets/js/poster-video.js`, injecté par
+`HeroPoster.vue`. Pourquoi pas Vue : voir
+`docs/adr/0003-zero-js-script-inline.md`.
+
+**Tester sur le build, pas en dev** : `nuxt dev` exécute toujours Vue, donc
+un comportement qui dépendrait du JS de Nuxt y marcherait quand même. Pour
+voir ce que reçoit un visiteur : `npm run generate`, puis servir
+`.output/public`.
+
+Deux formats, le WebM (VP9, 834 ko) en premier et le MP4 (H.264, 1 Mo) en
+repli : le Chromium de certaines distributions Linux n'a pas de décodeur
+H.264. Pour ré-encoder le WebM depuis une nouvelle source :
+
+```bash
+ffmpeg -i source.webm -c:v libvpx-vp9 -b:v 0 -crf 45 -row-mt 1 -pass 1 -an -f null /dev/null
+ffmpeg -i source.webm -c:v libvpx-vp9 -b:v 0 -crf 45 -row-mt 1 -pass 2 -an \
+       public/videos/affiche-course.webm
+```
+
 ## Image Open Graph
 
 Le gabarit est dans `tools/og-image.html`. Pour régénérer
@@ -182,10 +216,23 @@ la commande `npx wrangler deploy`). Ce site est prévu pour **Pages** : dans
 
 ### 2. Brancher le domaine
 
-Le domaine est enregistré chez **Infomaniak**, mais sa **zone DNS est
-hébergée chez Cloudflare** : Pages ne sait servir l'apex (`gaelle-briet.fr`
-sans `www`) que si la zone est chez lui. Le domaine reste chez Infomaniak,
-seuls les serveurs de noms changent.
+Le domaine **et sa zone DNS** sont chez **Infomaniak**. Seul `www` pointe
+vers le site : un CNAME `www` → `gaelle-briet-fr.pages.dev`, créé dans le
+Manager Infomaniak, puis `www.gaelle-briet.fr` ajouté dans Projet Pages →
+**Custom domains**. L'apex (`gaelle-briet.fr` sans `www`) n'a aucun
+enregistrement et ne répond pas. Toute modification DNS (TXT de
+vérification, etc.) se fait donc chez Infomaniak.
+
+```bash
+dig +short NS gaelle-briet.fr            # nsany1/2.infomaniak.com
+dig +short CNAME www.gaelle-briet.fr     # gaelle-briet-fr.pages.dev.
+```
+
+#### Si un jour on branche l'apex
+
+Pages ne sait servir l'apex que si la zone DNS est chez Cloudflare. Il
+faudrait donc y déplacer la zone ; le domaine, lui, resterait chez
+Infomaniak, seuls les serveurs de noms changeraient.
 
 L'e-mail (`hello@`) passe par Proton, avec Infomaniak en secours : la zone
 contient donc des MX, SPF, DKIM, DMARC, SRV et CNAME d'autoconfiguration
@@ -203,9 +250,8 @@ mais tout ça concerne le courrier.
    personnalisés → les deux `*.ns.cloudflare.com` indiqués par Cloudflare.
 4. Attendre que Cloudflare déclare la zone **active**, puis s'envoyer un
    mail à `hello@` pour vérifier que le courrier arrive toujours.
-5. Projet Pages → **Custom domains** → ajouter `www.gaelle-briet.fr`
-   (l'enregistrement se crée tout seul). L'apex `gaelle-briet.fr` peut
-   s'ajouter plus tard, voir « Adresse canonique ».
+5. Projet Pages → **Custom domains** → ajouter `gaelle-briet.fr`, puis la
+   redirection vers `www` décrite dans « Adresse canonique ».
 6. Attendre que le certificat HTTPS soit actif avant de communiquer l'URL.
 
 Vérifier après coup, depuis un terminal :
@@ -231,7 +277,8 @@ https://gaelle-briet.fr/* https://www.gaelle-briet.fr/:splat 301
 
 ## Ce que le site n'a pas, volontairement
 
-- Pas de JavaScript en production, donc pas de coût d'hydratation.
+- Pas de JavaScript de Nuxt en production, donc pas de coût d'hydratation.
+  Le seul script est celui de la vidéo de l'affiche, inline, 2 ko.
 - Pas de script tiers, pas d'analytics, pas de cookie, pas de bandeau.
   Si un jour c'est nécessaire : Cloudflare Web Analytics, qui ne pose pas
   de cookie. Rien d'autre.
@@ -252,8 +299,12 @@ sert Cloudflare Pages :
 Le score mobile oscille d'un point d'un run à l'autre sur le même build :
 c'est le bruit de mesure de Lighthouse, pas une régression.
 
-Page complète, images comprises : **207 ko transférés en 10 requêtes**.
-LCP 1,9 s en mobile bridé, CLS 0, TBT 0 ms.
+Accueil au chargement, en mobile : **205 ko transférés en 11 requêtes**,
+LCP 2,1 s en mobile bridé, CLS 0, TBT 0 ms (mesuré le 28 septembre 2026).
+Le portrait et le sceau, plus bas, se chargent au défilement. La vidéo
+(834 ko) s'ajoute sur écran tactile quand l'affiche apparaît, et à la
+souris au premier survol. En desktop, Lighthouse la compte : son Chrome
+headless n'a pas de souris et se comporte comme un écran tactile.
 
 ### Limite d'accessibilité connue
 

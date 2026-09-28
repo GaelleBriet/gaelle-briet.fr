@@ -1,0 +1,5 @@
+# Zéro JS de Nuxt en production, un script inline pour la vidéo de l'affiche
+
+La vidéo de l'affiche du hero est le seul élément interactif du site. Pour la faire jouer au survol, le JS de Nuxt avait été réactivé en production le 8 septembre 2026 (PR #7). Chaque page servait alors 185 Ko de runtime Vue (68 Ko gzip), y compris sur mobile, où le survol n'existe pas, et sur les pages sans aucune interactivité (mentions légales, étude de cas, 404). Décision du 28 septembre 2026 : `features.noScripts: 'production'` est remis en place et la vidéo est pilotée par un script inline d'une cinquantaine de lignes, `app/assets/js/poster-video.js`, injecté par `HeroPoster.vue`. Il fait aussi jouer l'animation sur écran tactile : une lecture sans boucle quand l'affiche apparaît, puis à chaque toucher. Jamais d'animation avec le mouvement réduit, pas de lecture automatique en mode économie de données.
+
+Conséquence : tout comportement qui demanderait du JS doit passer par un script inline du même genre, jamais par Vue côté client. `nuxt dev` exécute toujours Vue : un oubli ne se voit qu'avec `npm run generate` et le dossier généré.

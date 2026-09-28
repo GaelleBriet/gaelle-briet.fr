@@ -1,5 +1,4 @@
 // Les trois petites annonces de la colonne droite de « Travaillons ensemble ».
-// Textes repris mot pour mot de textes.md.
 // Les rotations et chevauchements sont du dessin : ils vivent dans Clipping.vue.
 
 export interface Clipping {

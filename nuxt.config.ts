@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      // /introuvable est prérendue puis renommée en 404.html (hook `close`).
+      // /introuvable est prérendue sous le nom 404.html (hook ci-dessous).
       routes: ['/', '/projets/symbaroum-bestiary-manager/', '/mentions-legales/', '/introuvable'],
     },
   },
@@ -75,6 +75,10 @@ export default defineNuxtConfig({
 
   features: {
     inlineStyles: true,
+    // Aucun JS de Nuxt en production : les pages n'ont rien à hydrater.
+    // Seule exception, la vidéo de l'affiche, gérée par un script inline
+    // (app/assets/js/poster-video.js). Voir docs/adr/0003.
+    noScripts: 'production',
   },
 
   experimental: {

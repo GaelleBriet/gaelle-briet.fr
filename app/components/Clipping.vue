@@ -176,18 +176,22 @@ defineProps<{
   }
 }
 
-.clipping--1:focus-within {
-  transform: rotate(-0.5deg) translateY(-6px);
-  z-index: 10;
-}
+/* Même soulèvement au clavier, mais seulement là où les coupures
+   sont inclinées : sous 1021 px elles restent à plat. */
+@media (min-width: 1021px) {
+  .clipping--1:focus-within {
+    transform: rotate(-0.5deg) translateY(-6px);
+    z-index: 10;
+  }
 
-.clipping--2:focus-within {
-  transform: rotate(0.5deg) translateY(-6px);
-  z-index: 10;
-}
+  .clipping--2:focus-within {
+    transform: rotate(0.5deg) translateY(-6px);
+    z-index: 10;
+  }
 
-.clipping--3:focus-within {
-  transform: rotate(-0.3deg) translateY(-6px);
-  z-index: 10;
+  .clipping--3:focus-within {
+    transform: rotate(-0.3deg) translateY(-6px);
+    z-index: 10;
+  }
 }
 </style>

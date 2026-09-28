@@ -6,10 +6,11 @@ import { nav, navCta, site } from '~/content/site'
   <header class="header">
     <nav class="header__bar container" aria-label="Navigation principale">
       <a class="brand" href="/#haut">
+        <!-- Le nom du lien, c'est le texte à côté : le logo est décoratif. -->
         <img
           class="brand__mark"
           src="/images/marque-gb.svg"
-          :alt="site.brandAlt"
+          alt=""
           width="118"
           height="42"
         >
@@ -123,9 +124,17 @@ import { nav, navCta, site } from '~/content/site'
   }
 }
 
+/* Texte masqué à l'œil seulement : il reste le nom du lien
+   pour les lecteurs d'écran (mêmes règles que .visually-hidden). */
 @media (max-width: 560px) {
   .brand__text {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 }
 </style>
