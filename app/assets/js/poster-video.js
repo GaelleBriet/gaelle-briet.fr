@@ -1,6 +1,5 @@
-// Vidéo de l'affiche du hero. Seul JavaScript du site : Nuxt n'en sert aucun
-// en production (features.noScripts), ce fichier est injecté inline par
-// HeroPoster.vue. Voir docs/adr/0003-zero-js-script-inline.md.
+// Vidéo de l'affiche du hero. Nuxt ne sert aucun JS en production
+// (features.noScripts) : ce fichier est injecté inline par HeroPoster.vue. Voir docs/adr/0003-zero-js-script-inline.md.
 //
 // Avec une souris : jouée en boucle au survol, arrêtée à la sortie.
 // Sur écran tactile : jouée une fois, sans boucle, quand l'affiche apparaît,

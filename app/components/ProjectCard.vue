@@ -12,21 +12,14 @@ defineProps<{ project: Project }>()
 
     <div class="card__body">
       <div class="card__photo photo-corners">
-        <img
-          v-if="project.image"
-          class="card__image"
-          :src="project.image.src"
-          :srcset="project.image.srcset"
-          :sizes="project.image.sizes"
-          :alt="project.image.alt"
-          :width="project.image.width"
-          :height="project.image.height"
-          loading="lazy"
-          decoding="async"
-        >
+        <ProjectGallery
+          v-if="project.images?.length"
+          :images="project.images"
+          :title="project.title"
+        />
         <!-- Les coins ne tiennent que le cadre vide : sur une vraie capture
              ils mangeaient les angles de l'image. -->
-        <template v-if="!project.image">
+        <template v-else>
           <span class="photo-corner photo-corner--tl" />
           <span class="photo-corner photo-corner--tr" />
           <span class="photo-corner photo-corner--bl" />
@@ -184,13 +177,6 @@ defineProps<{ project: Project }>()
   transform: none;
 }
 
-.card__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 200ms ease;
-}
-
 @media (hover: hover) and (pointer: fine) and (min-width: 761px) {
   .card--service .card__photo:hover {
     transform: rotate(1deg) translateY(-3px);
@@ -202,8 +188,8 @@ defineProps<{ project: Project }>()
     box-shadow: 4px 4px 0 var(--ink);
   }
 
-  .card--service .card__photo:hover .card__image,
-  .card--construction .card__photo:hover .card__image {
+  .card--service .card__photo:hover :deep(.gallery__image),
+  .card--construction .card__photo:hover :deep(.gallery__image) {
     transform: scale(1.04);
   }
 }

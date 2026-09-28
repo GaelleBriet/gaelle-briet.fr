@@ -97,6 +97,11 @@ em, i, cite, address, dfn { font-style: normal; }
   background: var(--coral);
 }
 
+/* Grande vue des galeries ouverte : la page derrière ne défile plus. */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
 /* Réservé aux lecteurs d'écran. */
 .visually-hidden {
   position: absolute;
