@@ -1,4 +1,4 @@
-// Les trois fiches projet. Textes repris mot pour mot de textes.md.
+// Les trois fiches projet.
 
 export type ProjectStatus = 'service' | 'construction' | 'libre'
 
@@ -98,7 +98,8 @@ export const projects: Project[] = [
     stack: 'À définir ensemble',
     action: {
       label: 'En parler',
-      href: '#contact',
+      // Même destination que le bouton Contact de la nav.
+      href: '#missions',
       external: false,
     },
   },

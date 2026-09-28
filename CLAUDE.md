@@ -11,7 +11,7 @@ Règles de travail :
 
 ## Stack
 - Nuxt 4, TypeScript, génération statique (`nuxt generate`). Pas de SSR à l'exécution, pas de serveur.
-- CSS natif avec variables (fichier `tokens.css` fourni). Pas de Tailwind, pas de framework CSS.
+- CSS natif avec variables (`app/assets/css/tokens.css`, issu du fichier fourni avec la maquette). Pas de Tailwind, pas de framework CSS.
 - Polices auto-hébergées via `@fontsource/fraunces` (500, 600, 700), `@fontsource/karla` (400, 500, 600), `@fontsource/ibm-plex-mono` (500, 600). Aucun appel à Google Fonts (RGPD).
 - Images : WebP fournies, chargées en `<img>` avec `width`, `height`, `loading="lazy"` sauf l'affiche du hero. `@nuxt/image` uniquement si ça simplifie réellement.
 - Aucun script tiers, aucun analytics au départ. Si un jour : Cloudflare Web Analytics (sans cookie), rien d'autre.
@@ -54,30 +54,20 @@ Tous les textes viennent des fichiers `content/*.ts`, jamais des composants. `co
 - Contraste : le crème sur corail est limite pour du petit texte ; boutons en 15 px minimum, graisse 600.
 - `alt` sur toutes les images (l'affiche : "Affiche de course automobile années 50, trois monoplaces"). Les images décoratives en `alt=""`.
 - Focus visible (contour corail 3 px) sur tous les liens et boutons.
-- Meta : `<title>` "Gaëlle Briet · Développeuse web, approche produit", description de 150 caractères tirée du pitch, Open Graph avec une image 1200 × 630 à générer depuis l'affiche et le titre, `lang="fr"`, canonical sur https://gaelle-briet.fr.
+- Meta : titre et description dans `meta` de `app/content/site.ts` (positionnement local Cavaillon depuis sept. 2026), Open Graph avec l'image 1200 × 630 `public/og-image.jpg`, `lang="fr"`.
+- Adresse canonique : **https://www.gaelle-briet.fr**, avec `www` (`site.url`). L'apex n'est pas branché ; s'il l'est un jour, il redirige vers `www`.
 - E-mail : lien `mailto:` normal. Pas d'obfuscation JS, pas de formulaire.
 
 ## Performance
 - Objectif Lighthouse 95+ partout. Le site fait une page et une dizaine d'images, il n'y a aucune raison d'être en dessous.
 - Affiche du hero : WebP 1200 px, `fetchpriority="high"`. Le reste en lazy.
-- Pas de JS côté client hors ce que Nuxt génère ; aucune animation en boucle.
+- Aucun JS de Nuxt en production (`features.noScripts: 'production'`). Seule exception : la vidéo de l'affiche, pilotée par le script inline `app/assets/js/poster-video.js` (en boucle au survol à la souris ; sur écran tactile, une lecture à l'apparition puis au toucher). Aucune autre animation en boucle. Voir `docs/adr/0003-zero-js-script-inline.md`.
 
 ## Déploiement Cloudflare Pages
-1. Repo GitHub `GaelleBriet/gaelle-briet.fr` (public ou privé, au choix).
-2. Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git → choisir le repo.
-3. Paramètres de build :
-   - Framework preset : Nuxt
-   - Build command : `npm run generate`
-   - Build output directory : `.output/public`
-   - Variable d'environnement : `NODE_VERSION` = `20` (ou la version LTS courante)
-4. Premier déploiement sur `*.pages.dev` pour vérifier.
-5. Custom domains : ajouter `gaelle-briet.fr` et `www.gaelle-briet.fr`. Cloudflare affiche la cible CNAME.
-6. Chez Hostinger, zone DNS du domaine :
-   - `www` : CNAME vers la cible fournie par Cloudflare
-   - apex `@` : CNAME vers la même cible si Hostinger accepte le CNAME sur l'apex, sinon les enregistrements A/AAAA indiqués par Cloudflare
-   - ne pas toucher aux MX ni aux TXT existants (e-mail)
-7. Redirection `www` → apex : fichier `public/_redirects` avec `https://www.gaelle-briet.fr/* https://gaelle-briet.fr/:splat 301`.
-8. HTTPS automatique. Vérifier que le certificat est actif avant de communiquer l'URL.
+Procédure complète dans le README, section « Déploiement ». Les réglages qui s'écartent d'un Nuxt standard sont voulus :
+- Build output directory : `dist`, pas `.output/public` (Nitro bascule sur le preset `cloudflare-pages-static`).
+- `NODE_VERSION` = `22` : Nuxt 4.5 exige Node 22.19 ou plus.
+- Domaine et zone DNS chez **Infomaniak** : seul `www` pointe vers Pages (CNAME). Les MX et TXT servent au courrier (Proton), on n'y touche pas.
 
 Chaque push sur `main` redéploie. Les branches produisent des URL de prévisualisation, utile pour valider une modification avant de merger.
 

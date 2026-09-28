@@ -1,4 +1,4 @@
-// Les cinq étapes de la feuille de route. Textes repris mot pour mot de textes.md.
+// Les cinq étapes de la feuille de route.
 
 export interface RoadmapStep {
   number: string

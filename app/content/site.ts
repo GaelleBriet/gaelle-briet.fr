@@ -1,5 +1,5 @@
 // Tous les textes du site. Aucun texte en dur dans les composants.
-// Source : textes.md (maquette Claude Design v6.1), repris mot pour mot.
+// Source directe : les textes s'éditent ici (voir docs/adr/0001).
 
 export interface NavLink {
   label: string
@@ -11,8 +11,9 @@ export const site = {
   subtitle: 'Développeuse web · approche produit',
   email: 'hello@gaelle-briet.fr',
   url: 'https://www.gaelle-briet.fr',
-  brandAlt: 'Marque GB',
   sealAlt: 'Sceau Gaëlle Briet',
+  /** Ajouté, pour les lecteurs d'écran seulement, aux liens qui ouvrent un nouvel onglet. */
+  newTab: ' (nouvel onglet)',
   stack: 'Angular · Vue.js · TypeScript',
   /** Métier déclaré dans les données structurées (JSON-LD). */
   jobTitle: 'Développeuse d\'applications web',
@@ -60,7 +61,7 @@ export const hero = {
   location: 'Basée à Cavaillon, dans le Vaucluse, je conçois des applications web et outils métier pour des projets locaux comme à distance.',
   actions: {
     primary: { label: 'Voir les projets', href: '#projets' },
-    secondary: { label: 'Écrire', href: 'mailto:hello@gaelle-briet.fr' },
+    secondary: { label: 'Écrire', href: `mailto:${site.email}` },
   },
   poster: {
     src: '/images/affiche-1200.webp',
@@ -73,7 +74,10 @@ export const hero = {
     alt: 'Affiche de course automobile peinte, années 50 : trois monoplaces en pleine accélération.',
     caption: 'Fig. 01 · Une mission, plusieurs tours de piste.',
     credit: 'Illustration générée par IA.',
-    // Purement décorative, jouée au survol seulement (voir HeroPoster.vue) :
+    /** Affiché sur écran tactile seulement, là où le survol n'existe pas. */
+    touchHint: 'Touchez l\'affiche pour l\'animer.',
+    // Purement décorative, jouée au survol à la souris ; sur écran tactile,
+    // une fois à l'apparition puis au toucher (voir assets/js/poster-video.js) :
     // l'alt et la légende ci-dessus restent la version accessible.
     // Deux formats : le WebM (VP9) passe partout où le H.264 n'est pas
     // installé (ex. Chromium sous Linux sans les codecs propriétaires),
@@ -113,7 +117,7 @@ export const missions = {
     'Je peux intervenir sur la réflexion en amont, les maquettes et le développement front-end, principalement avec Angular, Vue.js et TypeScript.',
     'Je travaille sur des missions ponctuelles ou à temps partiel. Le périmètre et le mode d\'intervention se définissent ensemble, en fonction du projet.',
   ],
-  action: { label: 'Me parler de votre projet', href: 'mailto:hello@gaelle-briet.fr' },
+  action: { label: 'Me parler de votre projet', href: `mailto:${site.email}` },
 } as const
 
 export const footer = {

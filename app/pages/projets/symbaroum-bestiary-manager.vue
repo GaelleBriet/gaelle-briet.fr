@@ -65,7 +65,7 @@ const num = (n: number) => String(n).padStart(2, '0')
                     :href="item.href"
                     target="_blank"
                     rel="noopener"
-                  >{{ item.value }}</a>
+                  >{{ item.value }}<span class="visually-hidden">{{ site.newTab }}</span></a>
                   <template v-else>{{ item.value }}</template>
                 </dd>
               </div>

@@ -20,10 +20,10 @@ import { footer, site } from '~/content/site'
           <div class="footer__list">
             <a :href="`mailto:${site.email}`">{{ site.email }}</a>
             <a :href="site.links.github.url" target="_blank" rel="noopener">
-              {{ site.links.github.label }}
+              {{ site.links.github.label }}<span class="visually-hidden">{{ site.newTab }}</span>
             </a>
             <a :href="site.links.linkedin.url" target="_blank" rel="noopener">
-              {{ site.links.linkedin.label }}
+              {{ site.links.linkedin.label }}<span class="visually-hidden">{{ site.newTab }}</span>
             </a>
           </div>
         </section>

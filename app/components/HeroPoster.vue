@@ -1,58 +1,19 @@
 <script setup lang="ts">
-import { nextTick, ref } from 'vue'
 import { hero } from '~/content/site'
+import posterVideoScript from '~/assets/js/poster-video.js?raw'
 
 const { poster } = hero
 
-// Vidéo décorative, chargée seulement au premier survol.
-const videoEl = ref<HTMLVideoElement | null>(null)
-const sourcesLoaded = ref(false)
-const isVideoReady = ref(false)
-
-function canAnimate() {
-  if (typeof window === 'undefined') return false
-  return !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    && window.matchMedia('(hover: hover) and (pointer: fine)').matches
-}
-
-function onFrameEnter() {
-  if (!canAnimate()) return
-
-  const video = videoEl.value
-  if (!video) return
-
-  if (!sourcesLoaded.value) {
-    sourcesLoaded.value = true
-    void nextTick(() => video.load())
-  }
-
-  if (video.readyState >= 3) {
-    isVideoReady.value = true
-    void video.play()
-  } else {
-    video.addEventListener('canplay', () => {
-      isVideoReady.value = true
-      void video.play()
-    }, { once: true })
-  }
-}
-
-function onFrameLeave() {
-  const video = videoEl.value
-  if (!video) return
-  video.pause()
-  video.currentTime = 0
-  isVideoReady.value = false
-}
+// La vidéo est pilotée par un petit script inline, pas par Vue : Nuxt ne
+// sert aucun JS en production (features.noScripts dans nuxt.config.ts).
+useHead({
+  script: [{ innerHTML: posterVideoScript, tagPosition: 'bodyClose' }],
+})
 </script>
 
 <template>
   <figure class="poster">
-    <div
-      class="poster__frame"
-      @mouseenter="onFrameEnter"
-      @mouseleave="onFrameLeave"
-    >
+    <div class="poster__frame">
       <div class="poster__image-wrap">
         <img
           class="poster__image"
@@ -65,26 +26,27 @@ function onFrameLeave() {
           fetchpriority="high"
           decoding="async"
         >
-        <!-- Décorative, voir figcaption pour l'alt. -->
+        <!-- Décorative, voir figcaption pour l'alt. Les <source> sont
+             ajoutées par poster-video.js au premier déclenchement. -->
         <video
-          ref="videoEl"
           class="poster__video"
-          :class="{ 'poster__video--ready': isVideoReady }"
+          :data-webm="poster.video.webm"
+          :data-mp4="poster.video.mp4"
           muted
           loop
           playsinline
           preload="none"
           aria-hidden="true"
           tabindex="-1"
-        >
-          <source v-if="sourcesLoaded" :src="poster.video.webm" type="video/webm">
-          <source v-if="sourcesLoaded" :src="poster.video.mp4" type="video/mp4">
-        </video>
+        />
       </div>
     </div>
     <figcaption class="poster__caption">
       <span class="poster__caption-text">{{ poster.caption }}</span>
       <span class="poster__credit">{{ poster.credit }}</span>
+      <!-- Consigne visuelle seulement : la vidéo est décorative et masquée
+           aux lecteurs d'écran, la consigne l'est donc aussi. -->
+      <span class="poster__hint" aria-hidden="true">{{ poster.touchHint }}</span>
     </figcaption>
   </figure>
 </template>
@@ -101,6 +63,8 @@ function onFrameLeave() {
 /* Cadre + passe-partout : le fond crème autour de l'image fait le carton. */
 .poster__frame {
   width: 100%;
+  /* au toucher, pas de flash gris sur l'affiche (voir poster-video.js) */
+  -webkit-tap-highlight-color: transparent;
   max-width: 460px;
   background: var(--cream);
   border: var(--border);
@@ -167,13 +131,32 @@ function onFrameLeave() {
 
 /* Mention de provenance : discrète, pas de mono ni de capitales pour ne
    pas concurrencer la légende principale. */
-.poster__credit {
+.poster__credit,
+.poster__hint {
   display: block;
   margin-top: 2px;
   font-family: var(--font-body);
   font-size: 11px;
   color: var(--ink);
   opacity: .7;
+}
+
+/* La consigne ne vaut que là où poster-video.js écoute le toucher :
+   ni souris (survol), ni mouvement réduit (pas d'animation du tout). */
+.poster__hint {
+  display: none;
+}
+
+@media not ((hover: hover) and (pointer: fine)) {
+  .poster__hint {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster__hint {
+    display: none;
+  }
 }
 
 @media (max-width: 760px) {

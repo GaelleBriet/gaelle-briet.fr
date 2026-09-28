@@ -55,7 +55,7 @@ import { roadmap, steps } from '~/content/roadmap'
   place-items: center;
   width: 110px;
   height: 22px;
-  border-radius: 4px;
+  border-radius: 2px;
   background: var(--ink);
 }
 
@@ -63,7 +63,7 @@ import { roadmap, steps } from '~/content/roadmap'
   content: '';
   width: 70px;
   height: 6px;
-  border-radius: 3px;
+  border-radius: 2px;
   background: var(--cream);
 }
 
