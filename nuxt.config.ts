@@ -76,8 +76,8 @@ export default defineNuxtConfig({
   features: {
     inlineStyles: true,
     // Aucun JS de Nuxt en production : les pages n'ont rien à hydrater.
-    // Seule exception, la vidéo de l'affiche, gérée par un script inline
-    // (app/assets/js/poster-video.js). Voir docs/adr/0003.
+    // Exceptions : la vidéo de l'affiche et les galeries des fiches, gérées
+    // par des scripts inline (app/assets/js/). Voir docs/adr/0003.
     noScripts: 'production',
   },
 

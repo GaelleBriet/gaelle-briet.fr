@@ -26,6 +26,7 @@ app/
     SiteFooter.vue             sceau, zone, contact, navigation, copyright
     HeroPoster.vue             affiche encadrée, légende
     ProjectCard.vue            fiche cartonnée : onglet statut, numéro, capture avec coins photo, texte, stack, bouton
+    ProjectGallery.vue         galerie de captures d'une fiche + grande vue (<dialog>)
     Roadmap.vue                feuille de route : pince, barre bleue, 5 étapes, boucle de retour
     Clipping.vue               coupure de journal : papier, bord découpé, rotation, grain
     Portrait.vue               photo avec coins
@@ -61,7 +62,7 @@ Tous les textes viennent des fichiers `content/*.ts`, jamais des composants. `co
 ## Performance
 - Objectif Lighthouse 95+ partout. Le site fait une page et une dizaine d'images, il n'y a aucune raison d'être en dessous.
 - Affiche du hero : WebP 1200 px, `fetchpriority="high"`. Le reste en lazy.
-- Aucun JS de Nuxt en production (`features.noScripts: 'production'`). Seule exception : la vidéo de l'affiche, pilotée par le script inline `app/assets/js/poster-video.js` (en boucle au survol à la souris ; sur écran tactile, une lecture à l'apparition puis au toucher). Aucune autre animation en boucle. Voir `docs/adr/0003-zero-js-script-inline.md`.
+- Aucun JS de Nuxt en production (`features.noScripts: 'production'`). Deux exceptions, en scripts inline sur l'accueil : la vidéo de l'affiche (`app/assets/js/poster-video.js` : en boucle au survol à la souris ; sur écran tactile, une lecture à l'apparition puis au toucher) et les galeries des fiches projet (`app/assets/js/project-gallery.js`). Aucune autre animation en boucle. Voir `docs/adr/0003-zero-js-script-inline.md`.
 
 ## Déploiement Cloudflare Pages
 Procédure complète dans le README, section « Déploiement ». Les réglages qui s'écartent d'un Nuxt standard sont voulus :

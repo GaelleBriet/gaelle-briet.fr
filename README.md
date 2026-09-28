@@ -3,9 +3,9 @@
 Site vitrine : une page d'accueil, une étude de cas, les mentions légales.
 Nuxt 4 en génération statique, CSS natif, aucune dépendance d'exécution. Le
 build produit du HTML, du CSS et des images : **Nuxt ne sert aucun
-JavaScript en production**. Seule exception, un script inline d'une
-cinquantaine de lignes pour la vidéo de l'affiche (voir « Vidéo de
-l'affiche »).
+JavaScript en production**. Deux petits scripts inline font exception, sur
+l'accueil seulement : la vidéo de l'affiche et les galeries des fiches
+projet (voir « Vidéo de l'affiche » et « Galeries des fiches »).
 
 ## Démarrer
 
@@ -60,28 +60,56 @@ Dans `projects.ts`, ajouter une entrée au tableau `projects` :
   title: '…',
   text: '…',
   stack: '…',
-  image: {
-    src: '/images/mon-projet-800.webp',
-    srcset: '/images/mon-projet-400.webp 400w, /images/mon-projet-800.webp 800w',
-    sizes: '(max-width: 640px) calc(100vw - 108px), (max-width: 960px) calc(50vw - 67px), 317px',
-    width: 800, height: 500,
-    alt: '…',
-  },
+  images: [
+    {
+      thumb: {
+        src: '/images/projets/mon-projet-ecran-800.webp',
+        srcset: '/images/projets/mon-projet-ecran-400.webp 400w, /images/projets/mon-projet-ecran-800.webp 800w',
+      },
+      full: { src: '/images/projets/mon-projet-ecran-grand.webp', width: 1600, height: 1000 },
+      alt: '…',       // ce que montre l'image
+      caption: '…',   // légende sous la grande vue
+    },
+  ],
   action: { label: 'Voir sur GitHub', href: '…', external: true },
 }
 ```
 
-Penser à corriger les `index` des autres fiches (`01 / 04`, etc.) et à
-générer la variante 400 px de la capture :
-
-```bash
-magick public/images/mon-projet-800.webp -resize 400x -quality 82 \
-       public/images/mon-projet-400.webp
-```
+Penser à corriger les `index` des autres fiches (`01 / 04`, etc.).
 
 `status` pilote la couleur de l'onglet et la position : `service` en bleu
 pétrole à gauche, `construction` en moutarde au tiers, `libre` en pointillé
-à droite. Une fiche sans `image` affiche un cadre vide avec des coins photo.
+à droite. Une fiche sans `images` affiche un cadre vide avec des coins photo.
+
+## Galeries des fiches
+
+Chaque fiche montre ses `images` dans une bande qu'on fait glisser ; un
+clic ouvre la grande vue (un `<dialog>`), avec flèches, compteur, légende
+et touches ← → / Échap. La première image sert de vignette.
+
+Trois fichiers par image, dans `public/images/projets/` :
+
+| Fichier | Format | Rôle |
+|---|---|---|
+| `…-800.webp` et `…-400.webp` | 16:10 exactement (800 × 500, 400 × 250) | vignette de la fiche |
+| `…-grand.webp` | libre, 1600 px sur le grand côté | grande vue, chargée à l'ouverture seulement |
+
+Pour un écran de téléphone, la vignette est un cadrage 16:10 sur le haut
+utile de l'écran, et la grande vue montre l'écran entier :
+
+```bash
+# capture 390 × 844 prise en ×3 (1170 × 2532), cadrage à partir de y = 44 px
+magick ecran.png -crop 1170x732+0+132 +repage -resize 800x500! -quality 82 mon-projet-ecran-800.webp
+magick mon-projet-ecran-800.webp -resize 400x -quality 82 mon-projet-ecran-400.webp
+magick ecran.png -resize x1600 -quality 82 mon-projet-ecran-grand.webp
+```
+
+Le comportement vient du script inline `app/assets/js/project-gallery.js`
+(injecté par `ProjectGallery.vue`, une seule fois pour toutes les fiches).
+Sans lui, rien ne casse : la bande glisse au doigt ou au clavier et chaque
+vignette ouvre la grande image dans l'onglet. Les captures de Symbaroum
+viennent de la démo en ligne (`?demo`), celles de MémoPatte du carnet de
+démo de l'appli (`pnpm dev:data`).
 
 ## Design
 
@@ -278,7 +306,8 @@ https://gaelle-briet.fr/* https://www.gaelle-briet.fr/:splat 301
 ## Ce que le site n'a pas, volontairement
 
 - Pas de JavaScript de Nuxt en production, donc pas de coût d'hydratation.
-  Le seul script est celui de la vidéo de l'affiche, inline, 2 ko.
+  Les seuls scripts sont inline, sur l'accueil : vidéo de l'affiche et
+  galeries des fiches, 5 ko à eux deux.
 - Pas de script tiers, pas d'analytics, pas de cookie, pas de bandeau.
   Si un jour c'est nécessaire : Cloudflare Web Analytics, qui ne pose pas
   de cookie. Rien d'autre.
@@ -293,15 +322,16 @@ sert Cloudflare Pages :
 
 | | Performance | Accessibilité | Bonnes pratiques | SEO |
 |---|---|---|---|---|
-| Mobile | 99–100 | 95 | 100 | 100 |
-| Desktop | 100 | 95 | 100 | 100 |
+| Mobile | 99–100 | 96 | 100 | 100 |
+| Desktop | 100 | 96 | 100 | 100 |
 
 Le score mobile oscille d'un point d'un run à l'autre sur le même build :
 c'est le bruit de mesure de Lighthouse, pas une régression.
 
-Accueil au chargement, en mobile : **205 ko transférés en 11 requêtes**,
-LCP 2,1 s en mobile bridé, CLS 0, TBT 0 ms (mesuré le 28 septembre 2026).
-Le portrait et le sceau, plus bas, se chargent au défilement. La vidéo
+Accueil au chargement, en mobile : **264 ko transférés en 16 requêtes**,
+dont les 7 vignettes des galeries, LCP 2,1 s en mobile bridé, CLS 0,
+TBT 0 ms (mesuré le 28 septembre 2026). Le portrait et le sceau, plus bas,
+se chargent au défilement ; les grandes images des galeries, à l'ouverture. La vidéo
 (834 ko) s'ajoute sur écran tactile quand l'affiche apparaît, et à la
 souris au premier survol. En desktop, Lighthouse la compte : son Chrome
 headless n'a pas de souris et se comporte comme un écran tactile.
