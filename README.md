@@ -328,8 +328,8 @@ sert Cloudflare Pages :
 Le score mobile oscille d'un point d'un run à l'autre sur le même build :
 c'est le bruit de mesure de Lighthouse, pas une régression.
 
-Accueil au chargement, en mobile : **264 ko transférés en 16 requêtes**,
-dont les 7 vignettes des galeries, LCP 2,1 s en mobile bridé, CLS 0,
+Accueil au chargement, en mobile : **291 ko transférés en 17 requêtes**,
+dont les 8 vignettes des galeries, LCP 2,1 s en mobile bridé, CLS 0,
 TBT 0 ms (mesuré le 28 septembre 2026). Le portrait et le sceau, plus bas,
 se chargent au défilement ; les grandes images des galeries, à l'ouverture. La vidéo
 (834 ko) s'ajoute sur écran tactile quand l'affiche apparaît, et à la
