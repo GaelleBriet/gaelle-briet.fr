@@ -57,12 +57,6 @@ const blocks = [page.editor, page.hosting]
       <h2 class="legal__heading">{{ page.privacy.title }}</h2>
       <div class="legal__body">
         <p v-for="p in page.privacy.paragraphs" :key="p">{{ p }}</p>
-        <p>
-          {{ page.privacy.memopatte.before }}<a
-            class="legal__link"
-            :href="page.privacy.memopatte.link.href"
-          >{{ page.privacy.memopatte.link.label }}</a>{{ page.privacy.memopatte.after }}
-        </p>
       </div>
     </section>
 
