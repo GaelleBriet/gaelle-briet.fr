@@ -7,7 +7,7 @@ export interface LegalRow {
   href?: string
 }
 
-export const editorPhone = '06 67 33 58 14'
+export const editorPhone = '07 69 46 49 63'
 
 const editorRows: LegalRow[] = [
   { label: 'Éditrice', value: 'Gaëlle Briet, entrepreneure individuelle' },
