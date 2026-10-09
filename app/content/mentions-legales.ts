@@ -30,16 +30,14 @@ export const mentionsLegales = {
   meta: {
     title: 'Mentions légales · Gaëlle Briet',
     description:
-      'Mentions légales de gaelle-briet.fr et de memopatte.gaelle-briet.fr : éditrice, hébergement, données personnelles, propriété intellectuelle.',
+      'Mentions légales de gaelle-briet.fr : éditrice, hébergement, données personnelles, propriété intellectuelle.',
   },
   eyebrow: 'Informations légales',
   title: 'Mentions légales',
   scope: [
     { text: 'Ces mentions valent pour ' },
     { text: 'www.gaelle-briet.fr', href: 'https://www.gaelle-briet.fr/' },
-    { text: ' et pour ' },
-    { text: 'memopatte.gaelle-briet.fr', href: 'https://memopatte.gaelle-briet.fr/' },
-    { text: ', le site de l\'application MémoPatte, éditée par Gaëlle Briet.' },
+    { text: '.' },
   ],
   editor: {
     title: 'Édition',
@@ -47,7 +45,7 @@ export const mentionsLegales = {
   },
   hosting: {
     title: 'Hébergement',
-    intro: 'Les deux sites sont hébergés par Cloudflare Pages, un service de :',
+    intro: 'Le site est hébergé par Cloudflare Pages, un service de :',
     rows: hostingRows,
   },
   privacy: {
@@ -58,19 +56,11 @@ export const mentionsLegales = {
       `Vous pouvez demander l'accès aux données qui vous concernent, leur rectification ou leur effacement en écrivant à ${site.email}, et introduire une réclamation auprès de la CNIL (www.cnil.fr).`,
       'Pour délivrer les pages, l\'hébergeur traite les données techniques de connexion, dont l\'adresse IP.',
     ],
-    memopatte: {
-      before: 'La politique de confidentialité de l\'application MémoPatte est sur ',
-      link: {
-        label: 'memopatte.gaelle-briet.fr/confidentialite',
-        href: 'https://memopatte.gaelle-briet.fr/confidentialite/',
-      },
-      after: '.',
-    },
   },
   property: {
     title: 'Propriété intellectuelle',
     paragraphs: [
-      'Sauf mention contraire, les textes, images et éléments graphiques de ces sites appartiennent à Gaëlle Briet. Toute reproduction, même partielle, demande son accord préalable.',
+      'Sauf mention contraire, les textes, images et éléments graphiques de ce site appartiennent à Gaëlle Briet. Toute reproduction, même partielle, demande son accord préalable.',
     ],
   },
 } as const
